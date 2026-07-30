@@ -1,0 +1,17 @@
+{
+  "appId": "uz.zamzamedu.part1",
+  "appName": "Zam-Zam EDU",
+  "webDir": "dist",
+  "backgroundColor": "#F4FBFB",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 800,
+      "backgroundColor": "#F4FBFB",
+      "androidSplashResourceName": "splash",
+      "showSpinner": false
+    }
+  }
+}

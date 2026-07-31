@@ -128,7 +128,53 @@ free and works offline once cached:
   (`speechSynthesis`) to read English aloud.
 - **Quiz feedback sounds** are synthesized with the **Web Audio API**.
 
-## 📦 Getting a real Android app (.apk/.aab)
+## 🔥 Gamification: streaks, points, and the public leaderboard
+
+- **Points**: +10 per completed lesson (quiz ≥70% AND homework ≥70% lines
+  filled — see below). Computed live from the `progress` table by
+  `src/database/leaderboard.js`, not stored redundantly.
+- **Streak**: consecutive days a student finished at least one lesson.
+  Tracked in `students.streak_count` / `students.last_activity_date`,
+  updated by `src/database/streak.js` → `updateStreak()`, called once per
+  lesson finish from `Lesson.jsx`. Never blocks the finish flow if it fails.
+- **Leaderboard** (`/leaderboard`, public route, no login): every student
+  across every group, ranked by points then streak. Top 10 = 🥇 gold tier,
+  next 10 = 🥈 silver, next 10 = 🥉 bronze, everyone else plain-ranked.
+  Linked from Register, Dashboard, and Teacher Dashboard.
+- **🌟 badge**: shown next to a student's name on the leaderboard if they
+  ever scored 100% on a lesson quiz.
+- **Not yet implemented** (would need a scheduled job, e.g. a Supabase Edge
+  Function + `pg_cron`, which is more infra than this MVP includes):
+  automatic weekly/monthly "winner" badges. The leaderboard + streak +
+  perfect-score badge above already cover most of the same motivational
+  effect without needing a cron job.
+
+## 📝 Automatic grammar check (homework)
+
+`src/hooks/useGrammarCheck.js` sends the student's 10 homework lines to
+[LanguageTool's free public API](https://languagetool.org/http-api/) (no
+API key, no cost) and marks each line ✅/⚠️ with a short explanation.
+This is **diagnostic only** — it does not block lesson completion (only
+the 7/10-lines-filled rule does), because a third-party free API can be
+slow or rate-limited and shouldn't be a hard gate for a classroom tool.
+The result (`grammar_correct_lines` / `grammar_total_checked`) is saved
+alongside the homework text so teachers can see it as a quality signal in
+the Teacher Dashboard (📝 icon on each lesson tile).
+
+If you outgrow LanguageTool's free tier (rate limit is modest — fine for
+occasional classroom use, but 100 students submitting at once could hit
+it), you can self-host LanguageTool (it's open source) or swap in a paid
+grammar API — only `useGrammarCheck.js` needs to change.
+
+## 🔄 Applying these changes to an already-live database
+
+If you already ran the original `schema.sql` and have real student data,
+**do not re-run schema.sql** (it won't delete anything, but it's
+unnecessary). Instead run **`database/migration_gamification.sql`** once
+in the SQL Editor — it only adds new columns/policies and never touches
+existing rows.
+
+
 
 Same two options as before — see the full walkthrough in the sibling
 `irregular-verbs-master` project's README, or:

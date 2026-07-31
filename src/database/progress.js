@@ -1,14 +1,25 @@
 import { supabase } from "./supabaseClient";
 
-const PASS_THRESHOLD = 0.7; // 70%+ correct unlocks the next lesson
+const PASS_THRESHOLD = 0.7; // 70%+ quiz correct AND 70%+ homework lines filled unlocks the next lesson
 
 /**
- * Save (or update, on a retry) one student's result for one lesson.
+ * Save (or update, on a retry) one student's result for one lesson. A
+ * lesson only counts as `completed` (unlocking the next one) when BOTH the
+ * quiz score and the homework line-fill rate are at least 70% —
+ * `homeworkSufficient` is computed by the caller (see Lesson.jsx, which
+ * counts how many of the 10 numbered homework lines were filled in).
  *
- * @param {{studentId: string, lessonId: number, score: number, totalQuestions: number}} result
+ * @param {{studentId: string, lessonId: number, score: number, totalQuestions: number, homeworkSufficient?: boolean}} result
  */
-export async function saveProgress({ studentId, lessonId, score, totalQuestions }) {
-  const completed = totalQuestions > 0 && score / totalQuestions >= PASS_THRESHOLD;
+export async function saveProgress({
+  studentId,
+  lessonId,
+  score,
+  totalQuestions,
+  homeworkSufficient = true,
+}) {
+  const quizPassed = totalQuestions > 0 && score / totalQuestions >= PASS_THRESHOLD;
+  const completed = quizPassed && homeworkSufficient;
 
   // Read the current attempt count (if any) so a retry increments it.
   const { data: existing } = await supabase

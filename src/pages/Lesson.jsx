@@ -14,6 +14,8 @@ import { saveProgress } from "../database/progress";
 import { submitHomework } from "../database/homework";
 
 const STEPS = ["vocab", "phrases", "dialogue", "quiz", "homework"];
+const HOMEWORK_LINE_COUNT = 10;
+const HOMEWORK_MIN_FILLED = 7; // 70% of 10 lines must be filled to count as sufficient
 
 export default function Lesson({ student }) {
   const { id } = useParams();
@@ -27,7 +29,7 @@ export default function Lesson({ student }) {
   const [selected, setSelected] = useState(null);
   const [answered, setAnswered] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
-  const [homeworkText, setHomeworkText] = useState("");
+  const [homeworkLines, setHomeworkLines] = useState(() => Array(HOMEWORK_LINE_COUNT).fill(""));
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState("");
 
@@ -63,6 +65,9 @@ export default function Lesson({ student }) {
     }
   }
 
+  const filledLineCount = homeworkLines.filter((line) => line.trim().length > 0).length;
+  const homeworkSufficient = filledLineCount >= HOMEWORK_MIN_FILLED;
+
   async function handleFinish() {
     setIsSaving(true);
     setSaveError("");
@@ -72,13 +77,19 @@ export default function Lesson({ student }) {
         lessonId: lesson.id,
         score: correctCount,
         totalQuestions: quiz.length,
+        homeworkSufficient,
       });
 
-      if (homeworkText.trim()) {
+      const numberedAnswer = homeworkLines
+        .map((line, i) => `${i + 1}. ${line.trim()}`)
+        .filter((_, i) => homeworkLines[i].trim().length > 0)
+        .join("\n");
+
+      if (numberedAnswer) {
         await submitHomework({
           studentId: student.id,
           lessonId: lesson.id,
-          answerText: homeworkText,
+          answerText: numberedAnswer,
         });
       }
 
@@ -89,7 +100,10 @@ export default function Lesson({ student }) {
           score: correctCount,
           total: quiz.length,
           completed: progressResult.completed,
-          homeworkSubmitted: Boolean(homeworkText.trim()),
+          homeworkSubmitted: Boolean(numberedAnswer),
+          homeworkFilled: filledLineCount,
+          homeworkNeeded: HOMEWORK_MIN_FILLED,
+          homeworkSufficient,
         },
       });
     } catch (err) {
@@ -203,13 +217,50 @@ export default function Lesson({ student }) {
               <p className="font-display font-bold text-ink mb-2">🏠 Уй вазифаси</p>
               <p className="text-sm text-ink-soft">{lesson.homeworkPrompt}</p>
             </Card>
-            <textarea
-              value={homeworkText}
-              onChange={(e) => setHomeworkText(e.target.value)}
-              placeholder="Жавобингизни шу ерга ёзинг..."
-              rows={6}
-              className="rounded-2xl bg-white border-2 border-aqua/15 px-4 py-3 text-ink placeholder:text-ink-faint outline-none focus:border-aqua transition-colors resize-none"
-            />
+
+            <div
+              className={`flex items-center justify-between rounded-2xl px-4 py-3 font-semibold text-sm ${
+                homeworkSufficient
+                  ? "bg-leaf/10 text-leaf-deep"
+                  : "bg-sun/15 text-sun-deep"
+              }`}
+            >
+              <span>
+                {homeworkSufficient ? "✅" : "✏️"} {filledLineCount}/{HOMEWORK_LINE_COUNT} қатор
+                тўлдирилди
+              </span>
+              <span>Энг ками {HOMEWORK_MIN_FILLED} керак</span>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              {homeworkLines.map((line, i) => (
+                <div key={i} className="flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-full bg-aqua-pale text-aqua-deep flex items-center justify-center text-xs font-bold shrink-0">
+                    {i + 1}
+                  </span>
+                  <input
+                    type="text"
+                    value={line}
+                    onChange={(e) => {
+                      const next = [...homeworkLines];
+                      next[i] = e.target.value;
+                      setHomeworkLines(next);
+                    }}
+                    placeholder={`${i + 1}-гап...`}
+                    className="flex-1 rounded-xl bg-white border-2 border-aqua/15 px-3 py-2.5 text-ink placeholder:text-ink-faint outline-none focus:border-aqua transition-colors"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {!homeworkSufficient && (
+              <p className="text-sun-deep text-sm bg-sun/10 border border-sun/30 rounded-xl px-3 py-2">
+                ⚠️ Камида {HOMEWORK_MIN_FILLED} та қатор тўлдирилмаса, дарс якунланмайди ва
+                кейинги дарс очилмайди — лекин жавобингиз сақланади, кейин қайтиб тўлдиришингиз
+                мумкин.
+              </p>
+            )}
+
             {saveError && (
               <p className="text-coral-deep text-sm bg-coral/10 border border-coral/30 rounded-xl px-3 py-2">
                 {saveError}

@@ -14,8 +14,9 @@ export default function LessonResult({ student }) {
 
   if (!state) return null;
 
-  const { lessonTitleUz, score, total, completed, homeworkSubmitted } = state;
+  const { lessonTitleUz, score, total, completed, homeworkSubmitted, homeworkFilled, homeworkNeeded, homeworkSufficient } = state;
   const percent = total > 0 ? Math.round((score / total) * 100) : 0;
+  const quizPassed = total > 0 && score / total >= 0.7;
 
   return (
     <div className="min-h-dvh flex items-center justify-center px-5 py-10">
@@ -39,9 +40,22 @@ export default function LessonResult({ student }) {
             ✅ Кейинги дарс очилди!
           </p>
         ) : (
-          <p className="text-coral-deep font-semibold text-sm bg-coral/10 rounded-xl px-3 py-2 mb-6">
-            Кейинги дарсни очиш учун камида 70% тўғри жавоб керак. Дарсни қайта ўтинг!
-          </p>
+          <div className="flex flex-col gap-2 mb-6">
+            {!quizPassed && (
+              <p className="text-coral-deep font-semibold text-sm bg-coral/10 rounded-xl px-3 py-2">
+                ✏️ Тестда камида 70% тўғри жавоб керак.
+              </p>
+            )}
+            {!homeworkSufficient && (
+              <p className="text-coral-deep font-semibold text-sm bg-coral/10 rounded-xl px-3 py-2">
+                🏠 Уй вазифасида камида {homeworkNeeded}/10 қатор тўлдирилиши керак (ҳозир{" "}
+                {homeworkFilled}/10).
+              </p>
+            )}
+            <p className="text-ink-faint text-xs">
+              Кейинги дарсни очиш учун дарсни қайта ўтиб, иккала шартни ҳам бажаринг.
+            </p>
+          </div>
         )}
 
         {homeworkSubmitted && (

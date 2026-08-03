@@ -60,7 +60,7 @@ export default function LessonResult({ student }) {
 
         {completed ? (
           <p className="text-leaf-deep font-semibold text-sm bg-leaf/10 rounded-xl px-3 py-2 mb-6">
-            ✅ Кейинги дарс очилди! ⭐ +10 балл умумий рейтингга қўшилди.
+            ✅ Кейинги дарс очилди! Уй вазифангизни ўқитувчингиз тасдиқлагач, ⭐ +10 балл умумий рейтингга қўшилади.
           </p>
         ) : (
           <div className="flex flex-col gap-2 mb-6">

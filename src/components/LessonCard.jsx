@@ -1,68 +1,109 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import Card from "../components/Card";
+import Button from "../components/Button";
+import DropField from "../components/DropField";
 
-const STATE_STYLES = {
-  locked: "bg-white/60 border-ink/10 opacity-60",
-  unlocked: "bg-white border-aqua/30 shadow-soft hover:-translate-y-0.5",
-  completed: "bg-white border-leaf/40 shadow-soft hover:-translate-y-0.5",
-};
+export default function LessonResult({ student }) {
+  const { state } = useLocation();
+  const navigate = useNavigate();
 
-const FEEDBACK_STYLE = {
-  pending: { text: "⏳ Ўқитувчи ҳали кўрмади", cls: "text-ink-faint" },
-  approved: { text: "✅ Ўқитувчи: Аъло!", cls: "text-leaf-deep" },
-  needs_revision: { text: "🔄 Ўқитувчи: тузатиш керак", cls: "text-coral-deep" },
-};
+  useEffect(() => {
+    if (!state) navigate("/dashboard", { replace: true });
+  }, [state, navigate]);
 
-/**
- * One lesson tile on the student dashboard. Locked lessons render as a
- * non-interactive div; unlocked/completed lessons are links into the lesson.
- * If the student has submitted homework for this lesson, a small feedback
- * line shows whether the teacher has reviewed it yet — this is the
- * "closing the loop" half of the teacher review feature.
- */
-export default function LessonCard({ lesson, status, score, homeworkFeedback }) {
-  const feedback = homeworkFeedback ? FEEDBACK_STYLE[homeworkFeedback.teacher_status] : null;
+  if (!state) return null;
 
-  const content = (
-    <div
-      className={`flex flex-col gap-2 rounded-2xl border-2 p-4 transition-all duration-200 ${STATE_STYLES[status]}`}
-    >
-      <div className="flex items-center gap-4">
-        <div className="w-14 h-14 rounded-2xl bg-aqua-pale flex items-center justify-center text-2xl shrink-0">
-          {status === "locked" ? "🔒" : lesson.icon}
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="font-display font-bold text-ink truncate">
-            {lesson.id}-дарс: {lesson.titleUz}
+  const {
+    lessonTitleUz,
+    score,
+    total,
+    completed,
+    homeworkSubmitted,
+    homeworkFilled,
+    homeworkNeeded,
+    homeworkSufficient,
+    grammarCorrectLines,
+    grammarTotalChecked,
+  } = state;
+  const percent = total > 0 ? Math.round((score / total) * 100) : 0;
+  const quizPassed = total > 0 && score / total >= 0.7;
+  const isPerfect = total > 0 && score === total;
+
+  return (
+    <div className="min-h-dvh flex items-center justify-center px-5 py-10">
+      <DropField />
+      <Card className="w-full max-w-sm text-center">
+        <div className="text-5xl mb-3">{completed ? "🎉" : "💪"}</div>
+        <h1 className="font-display text-2xl font-bold text-ink mb-1">
+          {completed ? "Табриклаймиз!" : "Яна бир бор уриниб кўринг!"}
+        </h1>
+        <p className="text-ink-soft mb-6">{lessonTitleUz}</p>
+
+        <div className="bg-aqua-pale/60 rounded-2xl p-5 mb-6">
+          <p className="font-display text-4xl font-bold text-aqua-deep">{percent}%</p>
+          <p className="text-sm text-ink-faint mt-1">
+            {score}/{total} тўғри жавоб
           </p>
-          <p className="text-sm text-ink-faint truncate">{lesson.titleEn}</p>
-        </div>
-        <div className="shrink-0 text-right">
-          {status === "completed" && (
-            <span className="inline-flex items-center gap-1 text-leaf-deep font-bold text-sm">
-              ✅ {score}%
-            </span>
+          {isPerfect && (
+            <p className="text-sun-deep font-semibold text-sm mt-2">🌟 Мукаммал натижа!</p>
           )}
-          {status === "unlocked" && (
-            <span className="text-aqua-deep font-bold text-sm">Бошлаш ➜</span>
-          )}
-          {status === "locked" && <span className="text-ink-faint text-sm">Қулфланган</span>}
         </div>
-      </div>
 
-      {feedback && (
-        <div className={`text-xs font-semibold pl-[4.5rem] ${feedback.cls}`}>
-          {feedback.text}
-          {homeworkFeedback.teacher_comment && (
-            <span className="block text-ink-faint font-normal mt-0.5">
-              💬 {homeworkFeedback.teacher_comment}
-            </span>
+        {grammarTotalChecked !== null && grammarTotalChecked > 0 && (
+          <div className="bg-white border-2 border-aqua/15 rounded-2xl p-4 mb-6">
+            <p className="text-sm font-semibold text-ink">
+              📝 Грамматика: {grammarCorrectLines}/{grammarTotalChecked} гап хатосиз
+            </p>
+          </div>
+        )}
+
+        {completed ? (
+          <p className="text-leaf-deep font-semibold text-sm bg-leaf/10 rounded-xl px-3 py-2 mb-6">
+            ✅ Кейинги дарс очилди! Уй вазифангизни ўқитувчингиз тасдиқлагач, ⭐ +10 балл умумий рейтингга қўшилади.
+          </p>
+        ) : (
+          <div className="flex flex-col gap-2 mb-6">
+            {!quizPassed && (
+              <p className="text-coral-deep font-semibold text-sm bg-coral/10 rounded-xl px-3 py-2">
+                ✏️ Тестда камида 70% тўғри жавоб керак.
+              </p>
+            )}
+            {!homeworkSufficient && (
+              <p className="text-coral-deep font-semibold text-sm bg-coral/10 rounded-xl px-3 py-2">
+                🏠 Уй вазифасида камида {homeworkNeeded}/10 қатор тўлдирилиши керак (ҳозир{" "}
+                {homeworkFilled}/10).
+              </p>
+            )}
+            <p className="text-ink-faint text-xs">
+              Кейинги дарсни очиш учун дарсни қайта ўтиб, иккала шартни ҳам бажаринг.
+            </p>
+          </div>
+        )}
+
+        {homeworkSubmitted && (
+          <p className="text-xs text-ink-faint mb-4">🏠 Уй вазифангиз ўқитувчингизга юборилди.</p>
+        )}
+
+        <div className="flex flex-col gap-3">
+          <Button variant="primary" onClick={() => navigate("/dashboard", { replace: true })}>
+            📚 Дарслар рўйхатига қайтиш
+          </Button>
+          {completed && (
+            <Button variant="sun" onClick={() => navigate("/leaderboard")}>
+              🏆 Умумий рейтингни кўриш
+            </Button>
+          )}
+          {!completed && (
+            <Button
+              variant="ghost"
+              onClick={() => navigate(`/lesson/${state.lessonId}`, { replace: true })}
+            >
+              🔄 Дарсни қайта ўтиш
+            </Button>
           )}
         </div>
-      )}
+      </Card>
     </div>
   );
-
-  if (status === "locked") return content;
-
-  return <Link to={`/lesson/${lesson.id}`}>{content}</Link>;
 }

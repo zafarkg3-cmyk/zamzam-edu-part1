@@ -45,7 +45,7 @@ export async function registerStudent({ name, surname, groupName }) {
 export async function fetchStudentsInGroup(groupId) {
   const { data, error } = await supabase
     .from("students")
-    .select("id, name, surname, created_at")
+    .select("id, name, surname, streak_count, created_at")
     .eq("group_id", groupId)
     .order("created_at", { ascending: true });
 

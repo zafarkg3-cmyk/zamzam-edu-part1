@@ -10,8 +10,10 @@ import OptionButton from "../components/OptionButton";
 import DropField from "../components/DropField";
 import { getLesson, generateLessonQuiz } from "../data/lessons";
 import { useSound } from "../hooks/useSound";
+import { useGrammarCheck } from "../hooks/useGrammarCheck";
 import { saveProgress } from "../database/progress";
 import { submitHomework } from "../database/homework";
+import { updateStreak } from "../database/streak";
 
 const STEPS = ["vocab", "phrases", "dialogue", "quiz", "homework"];
 const HOMEWORK_LINE_COUNT = 10;
@@ -30,8 +32,10 @@ export default function Lesson({ student }) {
   const [answered, setAnswered] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
   const [homeworkLines, setHomeworkLines] = useState(() => Array(HOMEWORK_LINE_COUNT).fill(""));
+  const [grammarResult, setGrammarResult] = useState(null); // { lineHasError, lineMessages } | null
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState("");
+  const { checkLines, isChecking } = useGrammarCheck();
 
   if (!lesson) return <Navigate to="/dashboard" replace />;
 
@@ -68,6 +72,18 @@ export default function Lesson({ student }) {
   const filledLineCount = homeworkLines.filter((line) => line.trim().length > 0).length;
   const homeworkSufficient = filledLineCount >= HOMEWORK_MIN_FILLED;
 
+  function updateHomeworkLine(index, value) {
+    const next = [...homeworkLines];
+    next[index] = value;
+    setHomeworkLines(next);
+    setGrammarResult(null); // stale after any edit — student should re-check
+  }
+
+  async function handleCheckGrammar() {
+    const result = await checkLines(homeworkLines);
+    setGrammarResult(result); // null on failure — UI shows a graceful notice
+  }
+
   async function handleFinish() {
     setIsSaving(true);
     setSaveError("");
@@ -80,16 +96,31 @@ export default function Lesson({ student }) {
         homeworkSufficient,
       });
 
+      // Streak tracking is a nice-to-have — never let it block finishing
+      // the lesson if it fails for some reason.
+      try {
+        await updateStreak(student.id);
+      } catch (streakErr) {
+        console.error("Streak update failed:", streakErr);
+      }
+
       const numberedAnswer = homeworkLines
         .map((line, i) => `${i + 1}. ${line.trim()}`)
         .filter((_, i) => homeworkLines[i].trim().length > 0)
         .join("\n");
+
+      const grammarCorrectLines = grammarResult
+        ? homeworkLines.filter((line, i) => line.trim().length > 0 && !grammarResult.lineHasError[i]).length
+        : null;
+      const grammarTotalChecked = grammarResult ? filledLineCount : null;
 
       if (numberedAnswer) {
         await submitHomework({
           studentId: student.id,
           lessonId: lesson.id,
           answerText: numberedAnswer,
+          grammarCorrectLines,
+          grammarTotalChecked,
         });
       }
 
@@ -104,6 +135,8 @@ export default function Lesson({ student }) {
           homeworkFilled: filledLineCount,
           homeworkNeeded: HOMEWORK_MIN_FILLED,
           homeworkSufficient,
+          grammarCorrectLines,
+          grammarTotalChecked,
         },
       });
     } catch (err) {
@@ -233,25 +266,53 @@ export default function Lesson({ student }) {
             </div>
 
             <div className="flex flex-col gap-2">
-              {homeworkLines.map((line, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-aqua-pale text-aqua-deep flex items-center justify-center text-xs font-bold shrink-0">
-                    {i + 1}
-                  </span>
-                  <input
-                    type="text"
-                    value={line}
-                    onChange={(e) => {
-                      const next = [...homeworkLines];
-                      next[i] = e.target.value;
-                      setHomeworkLines(next);
-                    }}
-                    placeholder={`${i + 1}-гап...`}
-                    className="flex-1 rounded-xl bg-white border-2 border-aqua/15 px-3 py-2.5 text-ink placeholder:text-ink-faint outline-none focus:border-aqua transition-colors"
-                  />
-                </div>
-              ))}
+              {homeworkLines.map((line, i) => {
+                const hasChecked = grammarResult !== null;
+                const lineFilled = line.trim().length > 0;
+                const hasError = hasChecked && grammarResult.lineHasError[i];
+                return (
+                  <div key={i} className="flex flex-col gap-1">
+                    <div className="flex items-center gap-2">
+                      <span className="w-6 h-6 rounded-full bg-aqua-pale text-aqua-deep flex items-center justify-center text-xs font-bold shrink-0">
+                        {i + 1}
+                      </span>
+                      <input
+                        type="text"
+                        value={line}
+                        onChange={(e) => updateHomeworkLine(i, e.target.value)}
+                        placeholder={`${i + 1}-гап...`}
+                        className={`flex-1 rounded-xl bg-white border-2 px-3 py-2.5 text-ink placeholder:text-ink-faint outline-none focus:border-aqua transition-colors ${
+                          hasChecked && lineFilled
+                            ? hasError
+                              ? "border-coral/50"
+                              : "border-leaf/50"
+                            : "border-aqua/15"
+                        }`}
+                      />
+                      {hasChecked && lineFilled && (
+                        <span className="shrink-0 text-lg">{hasError ? "⚠️" : "✅"}</span>
+                      )}
+                    </div>
+                    {hasError && (
+                      <p className="text-xs text-coral-deep pl-8">
+                        {grammarResult.lineMessages[i]}
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
             </div>
+
+            <Button variant="ghost" onClick={handleCheckGrammar} disabled={isChecking || filledLineCount === 0}>
+              {isChecking ? "Текширилмоқда..." : "🔍 Грамматикани текшириш"}
+            </Button>
+
+            {grammarResult && (
+              <p className="text-center text-xs text-ink-faint">
+                {homeworkLines.filter((l, i) => l.trim() && !grammarResult.lineHasError[i]).length}/
+                {filledLineCount} гап хатосиз ёзилган
+              </p>
+            )}
 
             {!homeworkSufficient && (
               <p className="text-sun-deep text-sm bg-sun/10 border border-sun/30 rounded-xl px-3 py-2">

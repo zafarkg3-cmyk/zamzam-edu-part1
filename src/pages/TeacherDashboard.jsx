@@ -4,6 +4,7 @@ import Card from "../components/Card";
 import Button from "../components/Button";
 import Loader from "../components/Loader";
 import DropField from "../components/DropField";
+import HomeworkReviewPanel from "../components/HomeworkReviewPanel";
 import { LESSONS } from "../data/lessons";
 import { fetchStudentsInGroup } from "../database/students";
 import { fetchGroupProgress } from "../database/progress";
@@ -15,6 +16,7 @@ export default function TeacherDashboard() {
   const [students, setStudents] = useState(null);
   const [progressByStudent, setProgressByStudent] = useState(new Map());
   const [homeworkByStudent, setHomeworkByStudent] = useState(new Map());
+  const [expandedKey, setExpandedKey] = useState(null); // `${studentId}:${lessonId}` | null
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -46,8 +48,8 @@ export default function TeacherDashboard() {
 
         const homeworkMap = new Map();
         for (const row of homeworkRows) {
-          if (!homeworkMap.has(row.student_id)) homeworkMap.set(row.student_id, new Set());
-          homeworkMap.get(row.student_id).add(row.lesson_id);
+          if (!homeworkMap.has(row.student_id)) homeworkMap.set(row.student_id, new Map());
+          homeworkMap.get(row.student_id).set(row.lesson_id, row);
         }
         setHomeworkByStudent(homeworkMap);
       } catch (err) {
@@ -62,6 +64,16 @@ export default function TeacherDashboard() {
   }, [state, navigate]);
 
   if (!state?.group) return null;
+
+  function handleReviewed(studentId, lessonId, updatedHomework) {
+    setHomeworkByStudent((prev) => {
+      const next = new Map(prev);
+      const studentMap = new Map(next.get(studentId) ?? new Map());
+      studentMap.set(lessonId, updatedHomework);
+      next.set(studentId, studentMap);
+      return next;
+    });
+  }
 
   return (
     <div className="min-h-dvh px-5 py-8 max-w-md mx-auto w-full">
@@ -98,12 +110,12 @@ export default function TeacherDashboard() {
         <div className="flex flex-col gap-3">
           {students.map((s) => {
             const lessonMap = progressByStudent.get(s.id) ?? new Map();
-            const homeworkSet = homeworkByStudent.get(s.id) ?? new Set();
+            const homeworkMap = homeworkByStudent.get(s.id) ?? new Map();
             const completedCount = [...lessonMap.values()].filter((p) => p.completed).length;
 
             return (
               <Card key={s.id} className="p-4">
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center justify-between mb-1">
                   <p className="font-display font-bold text-ink">
                     {s.name} {s.surname}
                   </p>
@@ -111,33 +123,84 @@ export default function TeacherDashboard() {
                     {completedCount}/{LESSONS.length} дарс
                   </span>
                 </div>
-                <div className="flex gap-2 flex-wrap">
+                {s.streak_count > 0 && (
+                  <p className="text-xs text-sun-deep font-semibold mb-2">
+                    🔥 {s.streak_count} кун кетма-кет
+                  </p>
+                )}
+                <div className="flex gap-2 flex-wrap mt-2">
                   {LESSONS.map((lesson) => {
                     const row = lessonMap.get(lesson.id);
                     const percent = row
                       ? Math.round((row.score / Math.max(row.total_questions, 1)) * 100)
                       : null;
-                    const hasHomework = homeworkSet.has(lesson.id);
+                    const homework = homeworkMap.get(lesson.id);
+                    const grammarLabel =
+                      homework?.grammar_total_checked != null
+                        ? `${homework.grammar_correct_lines}/${homework.grammar_total_checked}`
+                        : null;
+                    const key = `${s.id}:${lesson.id}`;
+                    const isExpanded = expandedKey === key;
+                    const reviewIcon =
+                      homework?.teacher_status === "approved"
+                        ? "✅"
+                        : homework?.teacher_status === "needs_revision"
+                        ? "🔄"
+                        : homework
+                        ? "⏳"
+                        : null;
 
-                    return (
-                      <div
-                        key={lesson.id}
-                        className={`flex flex-col items-center gap-0.5 rounded-xl px-2.5 py-2 text-xs font-semibold ${
-                          row?.completed
-                            ? "bg-leaf/10 text-leaf-deep"
-                            : row
-                            ? "bg-sun/15 text-sun-deep"
-                            : "bg-ink/5 text-ink-faint"
-                        }`}
-                        title={lesson.titleUz}
-                      >
+                    const pillClasses = `flex flex-col items-center gap-0.5 rounded-xl px-2.5 py-2 text-xs font-semibold transition-transform ${
+                      row?.completed
+                        ? "bg-leaf/10 text-leaf-deep"
+                        : row
+                        ? "bg-sun/15 text-sun-deep"
+                        : "bg-ink/5 text-ink-faint"
+                    } ${isExpanded ? "ring-2 ring-aqua" : ""} ${homework ? "active:scale-95" : ""}`;
+
+                    const pillContent = (
+                      <>
                         <span>{lesson.icon}</span>
                         <span>{percent !== null ? `${percent}%` : "—"}</span>
-                        {hasHomework && <span title="Уй вазифаси топширилган">🏠</span>}
+                        {reviewIcon && <span title="Ўқитувчи баҳоси">{reviewIcon}</span>}
+                        {grammarLabel && (
+                          <span className="text-[10px] text-ink-faint" title="Грамматика: тўғри/текширилган">
+                            📝{grammarLabel}
+                          </span>
+                        )}
+                      </>
+                    );
+
+                    return homework ? (
+                      <button
+                        key={lesson.id}
+                        type="button"
+                        onClick={() => setExpandedKey(isExpanded ? null : key)}
+                        className={pillClasses}
+                        title={`${lesson.titleUz} — уй вазифасини кўриш`}
+                      >
+                        {pillContent}
+                      </button>
+                    ) : (
+                      <div key={lesson.id} className={pillClasses} title={lesson.titleUz}>
+                        {pillContent}
                       </div>
                     );
                   })}
                 </div>
+
+                {LESSONS.map((lesson) => {
+                  const key = `${s.id}:${lesson.id}`;
+                  const homework = homeworkMap.get(lesson.id);
+                  if (expandedKey !== key || !homework) return null;
+                  return (
+                    <HomeworkReviewPanel
+                      key={key}
+                      homework={homework}
+                      onReviewed={(updated) => handleReviewed(s.id, lesson.id, updated)}
+                    />
+                  );
+                })}
               </Card>
             );
           })}
@@ -146,6 +209,9 @@ export default function TeacherDashboard() {
 
       <Button variant="ghost" onClick={() => navigate("/teacher")} className="mt-6">
         🔍 Бошқа гуруҳни қидириш
+      </Button>
+      <Button variant="sun" onClick={() => navigate("/leaderboard")} className="mt-3">
+        🏆 Умумий рейтингни кўриш
       </Button>
     </div>
   );

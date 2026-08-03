@@ -5,6 +5,7 @@ import Lesson from "./pages/Lesson";
 import LessonResult from "./pages/LessonResult";
 import TeacherLogin from "./pages/TeacherLogin";
 import TeacherDashboard from "./pages/TeacherDashboard";
+import Leaderboard from "./pages/Leaderboard";
 import { useStudent } from "./hooks/useStudent";
 
 export default function App() {
@@ -47,6 +48,7 @@ export default function App() {
 
         <Route path="/teacher" element={<TeacherLogin />} />
         <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

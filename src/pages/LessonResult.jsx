@@ -14,9 +14,21 @@ export default function LessonResult({ student }) {
 
   if (!state) return null;
 
-  const { lessonTitleUz, score, total, completed, homeworkSubmitted, homeworkFilled, homeworkNeeded, homeworkSufficient } = state;
+  const {
+    lessonTitleUz,
+    score,
+    total,
+    completed,
+    homeworkSubmitted,
+    homeworkFilled,
+    homeworkNeeded,
+    homeworkSufficient,
+    grammarCorrectLines,
+    grammarTotalChecked,
+  } = state;
   const percent = total > 0 ? Math.round((score / total) * 100) : 0;
   const quizPassed = total > 0 && score / total >= 0.7;
+  const isPerfect = total > 0 && score === total;
 
   return (
     <div className="min-h-dvh flex items-center justify-center px-5 py-10">
@@ -33,11 +45,22 @@ export default function LessonResult({ student }) {
           <p className="text-sm text-ink-faint mt-1">
             {score}/{total} тўғри жавоб
           </p>
+          {isPerfect && (
+            <p className="text-sun-deep font-semibold text-sm mt-2">🌟 Мукаммал натижа!</p>
+          )}
         </div>
+
+        {grammarTotalChecked !== null && grammarTotalChecked > 0 && (
+          <div className="bg-white border-2 border-aqua/15 rounded-2xl p-4 mb-6">
+            <p className="text-sm font-semibold text-ink">
+              📝 Грамматика: {grammarCorrectLines}/{grammarTotalChecked} гап хатосиз
+            </p>
+          </div>
+        )}
 
         {completed ? (
           <p className="text-leaf-deep font-semibold text-sm bg-leaf/10 rounded-xl px-3 py-2 mb-6">
-            ✅ Кейинги дарс очилди!
+            ✅ Кейинги дарс очилди! ⭐ +10 балл умумий рейтингга қўшилди.
           </p>
         ) : (
           <div className="flex flex-col gap-2 mb-6">
@@ -66,6 +89,11 @@ export default function LessonResult({ student }) {
           <Button variant="primary" onClick={() => navigate("/dashboard", { replace: true })}>
             📚 Дарслар рўйхатига қайтиш
           </Button>
+          {completed && (
+            <Button variant="sun" onClick={() => navigate("/leaderboard")}>
+              🏆 Умумий рейтингни кўриш
+            </Button>
+          )}
           {!completed && (
             <Button
               variant="ghost"

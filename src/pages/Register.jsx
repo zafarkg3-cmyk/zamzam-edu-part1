@@ -112,6 +112,12 @@ export default function Register({ onRegistered }) {
         >
           👨‍👩‍👧 Ота-она / Ўқитувчи учун
         </Link>
+        <Link
+          to="/leaderboard"
+          className="block text-center text-sm text-sun-deep font-semibold mt-2 hover:underline"
+        >
+          🏆 Умумий рейтингни кўриш
+        </Link>
       </Card>
     </div>
   );

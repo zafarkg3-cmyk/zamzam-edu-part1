@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Card from "../components/Card";
 import Button from "../components/Button";
 import Loader from "../components/Loader";
@@ -7,16 +8,27 @@ import ProgressRing from "../components/ProgressRing";
 import LessonCard from "../components/LessonCard";
 import { LESSONS } from "../data/lessons";
 import { fetchStudentProgress } from "../database/progress";
+import { getStreak } from "../database/streak";
+import { fetchStudentHomework } from "../database/homework";
 
 export default function Dashboard({ student, onSwitchStudent }) {
   const [progress, setProgress] = useState(null);
+  const [streak, setStreak] = useState(null);
+  const [homework, setHomework] = useState([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     let cancelled = false;
-    fetchStudentProgress(student.id)
-      .then((data) => {
-        if (!cancelled) setProgress(data);
+    Promise.all([
+      fetchStudentProgress(student.id),
+      getStreak(student.id),
+      fetchStudentHomework(student.id),
+    ])
+      .then(([progressData, streakData, homeworkData]) => {
+        if (cancelled) return;
+        setProgress(progressData);
+        setStreak(streakData);
+        setHomework(homeworkData);
       })
       .catch((err) => {
         console.error(err);
@@ -37,6 +49,7 @@ export default function Dashboard({ student, onSwitchStudent }) {
   }
 
   const progressByLesson = new Map((progress ?? []).map((p) => [p.lesson_id, p]));
+  const homeworkByLesson = new Map(homework.map((h) => [h.lesson_id, h]));
   const completedCount = (progress ?? []).filter((p) => p.completed).length;
 
   function statusFor(lesson) {
@@ -53,7 +66,7 @@ export default function Dashboard({ student, onSwitchStudent }) {
     <div className="min-h-dvh px-5 py-8 max-w-md mx-auto w-full">
       <DropField />
 
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-4">
         <div>
           <p className="text-ink-faint text-sm">Хуш келибсиз,</p>
           <h1 className="font-display text-xl font-bold text-ink">
@@ -62,6 +75,20 @@ export default function Dashboard({ student, onSwitchStudent }) {
           <p className="text-xs text-aqua-deep font-semibold">{student.groupName}</p>
         </div>
         <ProgressRing completed={completedCount} total={LESSONS.length} />
+      </div>
+
+      <div className="flex items-center gap-3 mb-6">
+        {streak !== null && streak > 0 && (
+          <div className="flex items-center gap-1.5 bg-sun/15 text-sun-deep rounded-full px-3.5 py-1.5 font-bold text-sm">
+            🔥 {streak} кун кетма-кет
+          </div>
+        )}
+        <Link
+          to="/leaderboard"
+          className="flex items-center gap-1.5 bg-aqua-pale text-aqua-deep rounded-full px-3.5 py-1.5 font-bold text-sm hover:bg-aqua/20 transition-colors"
+        >
+          🏆 Умумий рейтинг
+        </Link>
       </div>
 
       {error && (
@@ -78,7 +105,13 @@ export default function Dashboard({ student, onSwitchStudent }) {
             ? Math.round((score.score / Math.max(score.total_questions, 1)) * 100)
             : 0;
           return (
-            <LessonCard key={lesson.id} lesson={lesson} status={status} score={percent} />
+            <LessonCard
+              key={lesson.id}
+              lesson={lesson}
+              status={status}
+              score={percent}
+              homeworkFeedback={homeworkByLesson.get(lesson.id)}
+            />
           );
         })}
       </div>
@@ -87,7 +120,7 @@ export default function Dashboard({ student, onSwitchStudent }) {
         <Card className="mt-6 text-center">
           <p className="text-4xl mb-2">🎉</p>
           <p className="font-display font-bold text-ink">
-            Табриклаймиз! Part 1'нинг барча дарсларини тугатдингиз!
+            Табриклаймиз! Барча дарсларни тугатдингиз!
           </p>
         </Card>
       )}

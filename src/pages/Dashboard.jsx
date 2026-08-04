@@ -16,9 +16,21 @@ export default function Dashboard({ student, onSwitchStudent }) {
   const [streak, setStreak] = useState(null);
   const [homework, setHomework] = useState([]);
   const [error, setError] = useState("");
+  const [isSlow, setIsSlow] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
+    setError("");
+    setIsSlow(false);
+
+    // If the cloud database is slow to respond (e.g. a paused free-tier
+    // Supabase project waking up), tell the student instead of leaving
+    // them staring at a spinner with no explanation.
+    const slowTimer = setTimeout(() => {
+      if (!cancelled) setIsSlow(true);
+    }, 6000);
+
     Promise.all([
       fetchStudentProgress(student.id),
       getStreak(student.id),
@@ -33,17 +45,30 @@ export default function Dashboard({ student, onSwitchStudent }) {
       .catch((err) => {
         console.error(err);
         if (!cancelled) setError("Натижаларни юклашда хатолик юз берди.");
+      })
+      .finally(() => {
+        clearTimeout(slowTimer);
       });
+
     return () => {
       cancelled = true;
+      clearTimeout(slowTimer);
     };
-  }, [student.id]);
+  }, [student.id, retryCount]);
 
   if (progress === null && !error) {
     return (
-      <div className="min-h-dvh flex items-center justify-center">
+      <div className="min-h-dvh flex items-center justify-center px-5">
         <DropField />
-        <Loader label="Дарслар юкланмоқда..." />
+        <div className="flex flex-col items-center gap-4 text-center">
+          <Loader label="Дарслар юкланмоқда..." />
+          {isSlow && (
+            <p className="text-ink-faint text-xs max-w-xs">
+              Бироз узоқ давом этяпти — база "уйғонаётган" бўлиши мумкин, бир неча сония кутинг.
+              Агар давом этса, интернет алоқасини текшириб, саҳифани қайта юкланг.
+            </p>
+          )}
+        </div>
       </div>
     );
   }
@@ -92,9 +117,16 @@ export default function Dashboard({ student, onSwitchStudent }) {
       </div>
 
       {error && (
-        <p className="text-coral-deep text-sm bg-coral/10 border border-coral/30 rounded-xl px-3 py-2 mb-4">
-          {error}
-        </p>
+        <div className="text-coral-deep text-sm bg-coral/10 border border-coral/30 rounded-xl px-3 py-2 mb-4 flex items-center justify-between gap-3">
+          <span>{error}</span>
+          <button
+            type="button"
+            onClick={() => setRetryCount((c) => c + 1)}
+            className="shrink-0 font-bold underline"
+          >
+            Қайта уриниш
+          </button>
+        </div>
       )}
 
       <div className="flex flex-col gap-3">

@@ -14,16 +14,7 @@ export default function App() {
   return (
     <div className="bg-sky-gradient min-h-dvh w-full">
       <Routes>
-        <Route
-          path="/"
-          element={
-            student ? (
-              <Navigate to="/dashboard" replace />
-            ) : (
-              <Register onRegistered={setStudent} />
-            )
-          }
-        />
+        <Route path="/" element={<Register student={student} onRegistered={setStudent} onClearStudent={clearStudent} />} />
 
         <Route
           path="/dashboard"

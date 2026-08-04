@@ -16,11 +16,13 @@ create table if not exists groups (
 
 -- 2) STUDENTS
 create table if not exists students (
-  id         uuid primary key default gen_random_uuid(),
-  name       text not null,
-  surname    text not null,
-  group_id   uuid not null references groups(id) on delete cascade,
-  created_at timestamptz not null default now()
+  id                 uuid primary key default gen_random_uuid(),
+  name               text not null,
+  surname            text not null,
+  group_id           uuid not null references groups(id) on delete cascade,
+  streak_count       integer not null default 0,
+  last_activity_date date,
+  created_at         timestamptz not null default now()
 );
 
 -- 3) PROGRESS
@@ -40,13 +42,22 @@ create table if not exists progress (
 );
 
 -- 4) HOMEWORK
--- Free-text homework answers, reviewed by the teacher (no auto-grading).
+-- Free-text homework answers. grammar_* holds an automatic English
+-- grammar/spelling check result (diagnostic only — see
+-- useGrammarCheck.js). teacher_status/teacher_comment hold the teacher's
+-- human review, which is the real correctness feedback loop.
 create table if not exists homework (
-  id          uuid primary key default gen_random_uuid(),
-  student_id  uuid not null references students(id) on delete cascade,
-  lesson_id   integer not null,
-  answer_text text not null,
-  submitted_at timestamptz not null default now(),
+  id                     uuid primary key default gen_random_uuid(),
+  student_id             uuid not null references students(id) on delete cascade,
+  lesson_id              integer not null,
+  answer_text            text not null,
+  grammar_correct_lines  integer,
+  grammar_total_checked  integer,
+  teacher_status         text not null default 'pending'
+                            check (teacher_status in ('pending', 'approved', 'needs_revision')),
+  teacher_comment        text,
+  reviewed_at            timestamptz,
+  submitted_at           timestamptz not null default now(),
   unique (student_id, lesson_id)
 );
 
@@ -73,6 +84,7 @@ create policy "Anyone can create a group" on groups for insert with check (true)
 
 create policy "Anyone can create a student profile" on students for insert with check (true);
 create policy "Anyone can read students" on students for select using (true);
+create policy "Anyone can update students" on students for update using (true);
 
 create policy "Anyone can save progress" on progress for insert with check (true);
 create policy "Anyone can update progress" on progress for update using (true);

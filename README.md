@@ -1,16 +1,30 @@
-# 💧 Zam-Zam EDU — Part 1
+# 💧 Zam-Zam EDU — Part 1 + Part 2
 
-A 5-lesson spoken-English starter course for Uzbek-speaking children, built
-as a mobile-first, installable PWA with a shared cloud database (Supabase)
-so parents and teachers can watch every student's progress live.
+A spoken-English course for Uzbek-speaking children, built as a
+mobile-first, installable PWA with a shared cloud database (Supabase) so
+parents and teachers can watch every student's progress live.
 
-**The 5 lessons (Part 1's goal: be able to introduce yourself in English
-after finishing them):**
+**15 lessons total, in order (each unlocks the next):**
+
+*Part 1 — introducing yourself:*
 1. About Myself — Мен ҳақимда
 2. My Family — Оилам
 3. My Day — Куним
 4. My School & Friends — Мактабим ва дўстларим
 5. My Favorites — Севимли нарсаларим
+
+*Part 2 — everyday conversational situations:*
+6. The Weather — Об-ҳаво
+7. At the Shop — Дўконда
+8. At the Restaurant — Ресторанда
+9. Asking for Directions — Йўл сўраш
+10. Hobbies & Free Time — Бўш вақт машғулотлари
+11. Health & Body — Соғлиқ
+12. Clothes — Кийимлар
+13. Travel & Transport — Сафар ва транспорт
+14. Time & Calendar — Вақт ва сана
+15. Emotions & Feelings — Ҳис-туйғулар
+
 
 Each lesson: **Vocabulary** (flashcards + text-to-speech + memory-trick
 sentences) → **Key Phrases** → **Model Dialogue** → **Quiz** (auto-graded,
@@ -130,9 +144,18 @@ free and works offline once cached:
 
 ## 🔥 Gamification: streaks, points, and the public leaderboard
 
-- **Points**: +10 per completed lesson (quiz ≥70% AND homework ≥70% lines
-  filled — see below). Computed live from the `progress` table by
-  `src/database/leaderboard.js`, not stored redundantly.
+- **Points**: +10 per lesson, but ONLY once the teacher has marked that
+  lesson's homework **"approved"** (see "Teacher review" below) — passing
+  the quiz and filling in the homework lines is not enough by itself. This
+  is deliberate: without it, a student could out-rank classmates on the
+  strength of homework that turns out to be wrong, which defeats the
+  point of a fairness-driven leaderboard. Computed live by
+  `src/database/leaderboard.js` (cross-referencing `progress.completed`
+  with `homework.teacher_status = 'approved'`), not stored redundantly.
+  Note: lesson *unlocking* still only needs the quiz+homework-fill-rate
+  thresholds — it does not wait on teacher review, so students are never
+  blocked from progressing while homework sits in the review queue. Only
+  the leaderboard points wait for approval.
 - **Streak**: consecutive days a student finished at least one lesson.
   Tracked in `students.streak_count` / `students.last_activity_date`,
   updated by `src/database/streak.js` → `updateStreak()`, called once per
@@ -165,6 +188,26 @@ If you outgrow LanguageTool's free tier (rate limit is modest — fine for
 occasional classroom use, but 100 students submitting at once could hit
 it), you can self-host LanguageTool (it's open source) or swap in a paid
 grammar API — only `useGrammarCheck.js` needs to change.
+
+## ✅ Teacher review — the real correctness feedback loop
+
+Grammar-checking (above) only catches spelling/grammar mistakes — it can't
+judge whether a sentence is actually *on-topic* or *makes sense* for the
+lesson. That needs a human, so:
+
+- **Teacher Dashboard**: any lesson tile with a homework submission is now
+  clickable — tapping it expands the **full homework text** right there,
+  with **✅ "Аъло" / 🔄 "Тузатиш керак"** buttons and an optional short
+  comment. This writes to `homework.teacher_status` / `teacher_comment`.
+- **Student Dashboard**: each lesson tile shows the review status —
+  ⏳ "Ўқитувчи ҳали кўрмади" / ✅ "Ўқитувчи: Аъло!" / 🔄 "Ўқитувчи: тузатиш
+  керак" — plus the teacher's comment if they left one. This closes the
+  loop: the student sees a real human's verdict, not just "submitted".
+- Resubmitting homework for the same lesson resets its status back to
+  `pending`, since it's new text nobody has reviewed yet.
+- This does **not** gate lesson unlocking (only the quiz score + 7/10
+  homework-lines-filled rule does) — a teacher's review is feedback, not a
+  blocker, so a student never gets stuck waiting on it to keep progressing.
 
 ## 🔄 Applying these changes to an already-live database
 

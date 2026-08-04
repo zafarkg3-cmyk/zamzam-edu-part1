@@ -39,7 +39,7 @@ export default function Leaderboard() {
         <div className="text-center mb-6">
           <h1 className="font-display text-2xl font-bold text-aqua-deep">🏆 УМУМИЙ РЕЙТИНГ</h1>
           <p className="text-ink-faint text-sm mt-1">
-            Ҳар бир якунланган дарс учун +10 балл — юқори 10 та олтин 🥇, кейинги 10 та кумуш 🥈, кейинги 10 та бронза 🥉
+            Ўқитувчи тасдиқлаган ҳар бир дарс учун +10 балл — юқори 10 та олтин 🥇, кейинги 10 та кумуш 🥈, кейинги 10 та бронза 🥉
           </p>
         </div>
 

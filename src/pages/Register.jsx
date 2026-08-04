@@ -5,7 +5,51 @@ import Button from "../components/Button";
 import DropField from "../components/DropField";
 import { registerStudent } from "../database/students";
 
-export default function Register({ onRegistered }) {
+/**
+ * On a shared/school device, the browser may still remember the PREVIOUS
+ * student who used it (`student` prop, from localStorage). We must never
+ * silently drop a new student straight into that cached student's
+ * dashboard — so if one is remembered, we ask "is this you?" first. Only
+ * after the person explicitly says "no" (or there's no cached student at
+ * all) do we show the name/surname/group form.
+ */
+export default function Register({ student, onRegistered, onClearStudent }) {
+  if (student) {
+    return <ConfirmCachedStudent student={student} onNotMe={onClearStudent} />;
+  }
+  return <RegistrationForm onRegistered={onRegistered} />;
+}
+
+function ConfirmCachedStudent({ student, onNotMe }) {
+  const navigate = useNavigate();
+
+  return (
+    <div className="min-h-dvh flex items-center justify-center px-5 py-10">
+      <DropField />
+      <Card className="w-full max-w-sm text-center">
+        <div className="w-20 h-20 rounded-2xl bg-aqua-gradient shadow-soft flex items-center justify-center text-4xl mb-4 mx-auto">
+          👋
+        </div>
+        <h1 className="font-display text-xl font-bold text-ink mb-1">Бу сизми?</h1>
+        <p className="text-ink-soft mb-1">
+          {student.name} {student.surname}
+        </p>
+        <p className="text-xs text-aqua-deep font-semibold mb-6">{student.groupName}</p>
+
+        <div className="flex flex-col gap-3">
+          <Button variant="sun" onClick={() => navigate("/dashboard")}>
+            ✅ Ҳа, бу менман
+          </Button>
+          <Button variant="ghost" onClick={onNotMe}>
+            ❌ Йўқ, мен бошқа ўқувчиман
+          </Button>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+function RegistrationForm({ onRegistered }) {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [groupName, setGroupName] = useState("");
@@ -23,8 +67,8 @@ export default function Register({ onRegistered }) {
     setIsSubmitting(true);
     setError("");
     try {
-      const student = await registerStudent({ name, surname, groupName });
-      onRegistered(student);
+      const registered = await registerStudent({ name, surname, groupName });
+      onRegistered(registered);
       navigate("/dashboard");
     } catch (err) {
       console.error(err);
@@ -47,9 +91,8 @@ export default function Register({ onRegistered }) {
           <h1 className="font-display text-2xl font-bold text-ink leading-tight">
             ZAM-ZAM <span className="text-aqua-deep">EDU</span>
           </h1>
-          <p className="text-ink-faint text-xs font-semibold tracking-wide mt-0.5">PART 1</p>
           <p className="text-ink-soft text-sm mt-2">
-            5 та дарсда 5 та асосий мавзуда инглизча гапиришни ўрганинг!
+            Инглизча гапиришни ўрганинг — дарслар, тест ва уй вазифалари билан!
           </p>
         </div>
 

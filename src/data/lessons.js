@@ -953,6 +953,943 @@ export const LESSONS = [
     homeworkPrompt:
       "Ватанингиз ҳақида 9-10 та гап ёзинг: қандай гўзал жойлар бор, нимаси билан фахрланасиз. Ҳар бир қаторга битта гап ёзинг.",
   },
+
+  // ============================================================
+  // PART 4 — lessons 26-38: continues the A1 -> A2 progression with new
+  // everyday domains (classroom, cooking, seasons, holidays, quantities,
+  // transport) plus adverbs of frequency and Present Continuous.
+  // ============================================================
+
+  {
+    id: 26,
+    icon: "🏫",
+    titleUz: "Синфда",
+    titleEn: "In the Classroom",
+    vocabulary: [
+      { en: "open", uz: "очмоқ", emoji: "📖", mnemonic: "«оупен» — китобни «оупен» (оч) деб буюрадилар." },
+      { en: "close", uz: "ёпмоқ", emoji: "📕", mnemonic: "«клоуз» — эшикни «клоуз» (ёп) деб буюрадилар." },
+      { en: "listen", uz: "тингламоқ", emoji: "👂", mnemonic: "«лисен» — «лист»(рўйхат)ни тинглаб ёзасиз." },
+      { en: "repeat", uz: "такрорламоқ", emoji: "🔁", mnemonic: "«рипит» — «рипит»иция(такрор) сўзидан келади." },
+      { en: "write", uz: "ёзмоқ", emoji: "✍️", mnemonic: "«райт» — ёзганда қўлингиз «райт» (ўнг) томонга силжийди." },
+      { en: "pencil", uz: "қалам", emoji: "✏️", mnemonic: "«пенсил» — қалам билан «пенс»(чизиқ) чизасиз." },
+      { en: "notebook", uz: "дафтар", emoji: "📓", mnemonic: "«ноутбук» — дафтарга «ноут»(эслатма) ёзасиз." },
+      { en: "quiet", uz: "жим", emoji: "🤫", mnemonic: "«квайет» — жим бўлганда «квай»(секин) овоз чиқасиз." },
+    ],
+    phrases: [
+      { en: "Open your book, please.", uz: "Китобингизни очинг, илтимос." },
+      { en: "Listen and repeat.", uz: "Тингланг ва такрорланг." },
+      { en: "Can I borrow your pencil?", uz: "Қаламингизни олсам майлими?" },
+      { en: "Write your name here.", uz: "Исмингизни шу ерга ёзинг." },
+      { en: "Please be quiet.", uz: "Илтимос жим бўлинг." },
+    ],
+    dialogue: {
+      speakers: ["Teacher", "Anvar"],
+      lines: [
+        { speaker: "Teacher", en: "Open your books to page ten.", uz: "Китобларингизни ўнинчи бетга очинг." },
+        { speaker: "Anvar", en: "Excuse me, I don't have a pencil.", uz: "Кечирасиз, менда қалам йўқ." },
+        { speaker: "Malika", en: "Here, you can borrow mine.", uz: "Мана, меникини олсангиз бўлади." },
+        { speaker: "Anvar", en: "Thank you!", uz: "Раҳмат!" },
+        { speaker: "Teacher", en: "Now, listen and repeat after me.", uz: "Энди тингланг ва мендан кейин такрорланг." },
+        { speaker: "Anvar", en: "Okay, we are ready!", uz: "Хўп, биз тайёрмиз!" },
+      ],
+    },
+    homeworkPrompt:
+      "Синфдаги буюмлар ва топшириқлар ҳақида 9-10 та гап ёзинг: ўқитувчингиз нима деб буюради, синфда нима бор. Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 27,
+    icon: "🍲",
+    titleUz: "Овқат тайёрлаш",
+    titleEn: "Cooking & Recipes",
+    vocabulary: [
+      { en: "cut", uz: "кесмоқ", emoji: "🔪", mnemonic: "«кат» — кесганда «кат»так товуш чиқади." },
+      { en: "mix", uz: "аралаштирмоқ", emoji: "🥣", mnemonic: "«микс» — аралаштирганда «микс»(қоришма) ҳосил бўлади." },
+      { en: "add", uz: "қўшмоқ", emoji: "➕", mnemonic: "«эд» — қўшганда «эд»(қўшимча) бўлади." },
+      { en: "boil", uz: "қайнатмоқ", emoji: "🍳", mnemonic: "«бойл» — сув қайнаганда «бойл»(пуфак)лар чиқади." },
+      { en: "recipe", uz: "рецепт", emoji: "📋", mnemonic: "«рэсипи» — рецепт «рэсепи»(тартиб)дан иборат." },
+      { en: "salt", uz: "туз", emoji: "🧂", mnemonic: "«солт» — туз «солт»(шўр) таъм беради." },
+      { en: "sugar", uz: "шакар", emoji: "🍬", mnemonic: "«шугар» — шакар «шугар»(ширин) таъм беради." },
+      { en: "pan", uz: "тава", emoji: "🍳", mnemonic: "«пэн» — тавада «пэн»(чарс) овоз чиқади." },
+    ],
+    phrases: [
+      { en: "First, cut the vegetables.", uz: "Аввал сабзавотларни кесинг." },
+      { en: "Add some salt and sugar.", uz: "Бироз туз ва шакар қўшинг." },
+      { en: "Mix it well.", uz: "Яхшилаб аралаштиринг." },
+      { en: "Boil the water first.", uz: "Аввал сувни қайнатинг." },
+      { en: "This is my favorite recipe.", uz: "Бу менинг севимли рецептим." },
+    ],
+    dialogue: {
+      speakers: ["Malika", "Anvar"],
+      lines: [
+        { speaker: "Malika", en: "What are you cooking?", uz: "Нима пиширяпсиз?" },
+        { speaker: "Anvar", en: "I am making soup. First, I cut the vegetables.", uz: "Мен шўрва қиляпман. Аввал сабзавотларни кесяпман." },
+        { speaker: "Malika", en: "Do you add salt?", uz: "Туз қўшасизми?" },
+        { speaker: "Anvar", en: "Yes, and a little sugar too. Then I boil it.", uz: "Ҳа, озгина шакар ҳам. Кейин қайнатаман." },
+        { speaker: "Malika", en: "Can I help you mix it?", uz: "Аралаштиришда ёрдам бера оламанми?" },
+        { speaker: "Anvar", en: "Sure! Thank you for your help.", uz: "Албатта! Ёрдамингиз учун раҳмат." },
+      ],
+    },
+    homeworkPrompt:
+      "Овқат тайёрлаш ҳақида 9-10 та гап ёзинг: севимли таомингизни қандай тайёрлайсиз (cut, mix, add сўзларидан фойдаланинг). Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 28,
+    icon: "🍂",
+    titleUz: "Йил фасллари",
+    titleEn: "Seasons",
+    vocabulary: [
+      { en: "spring", uz: "баҳор", emoji: "🌷", mnemonic: "«спринг» — баҳорда табиат «спринг»(сакраб) уйғонади." },
+      { en: "summer", uz: "ёз", emoji: "☀️", mnemonic: "«самер» — ёзда «сам»(қуёш) иссиқ бўлади." },
+      { en: "autumn", uz: "куз", emoji: "🍁", mnemonic: "«отом» — кузда барглар «отом»(тушади)." },
+      { en: "winter", uz: "қиш", emoji: "❄️", mnemonic: "«винтер» — қишда «винт»(шамол) совуқ эсади." },
+      { en: "season", uz: "фасл", emoji: "🗓️", mnemonic: "«сизн» — тўртта фасл «сизн»(мавсум)ни ташкил қилади." },
+      { en: "leaves", uz: "барглар", emoji: "🍃", mnemonic: "«ливз» — барглар «лив»(қолиш)ни тарк этади кузда." },
+      { en: "snowfall", uz: "қор ёғиши", emoji: "🌨️", mnemonic: "«сноуфол» — қор «сноу»(қор) «фол»(тушиши)дан иборат." },
+      { en: "flower", uz: "гул", emoji: "🌸", mnemonic: "«флауэр» — гул «флауэр»(гулзор)да очилади." },
+    ],
+    phrases: [
+      { en: "I like spring because flowers bloom.", uz: "Мен баҳорни ёқтираман, чунки гуллар очилади." },
+      { en: "It snows a lot in winter.", uz: "Қишда кўп қор ёғади." },
+      { en: "Leaves fall in autumn.", uz: "Кузда барглар тўкилади." },
+      { en: "Summer is very hot here.", uz: "Бу ерда ёз жуда иссиқ." },
+      { en: "Which season do you like best?", uz: "Қайси фаслни энг кўп ёқтирасиз?" },
+    ],
+    dialogue: {
+      speakers: ["Anvar", "Malika"],
+      lines: [
+        { speaker: "Anvar", en: "Which season do you like best, Malika?", uz: "Қайси фаслни энг кўп ёқтирасиз, Малика?" },
+        { speaker: "Malika", en: "I like spring because flowers bloom everywhere.", uz: "Баҳорни ёқтираман, чунки ҳамма жойда гуллар очилади." },
+        { speaker: "Anvar", en: "I prefer winter. I love the snowfall.", uz: "Мен қишни афзал кўраман. Қор ёғишини яхши кўраман." },
+        { speaker: "Malika", en: "Really? I don't like the cold much.", uz: "Ростданми? Мен совуқни унча ёқтирмайман." },
+        { speaker: "Anvar", en: "What about autumn?", uz: "Куз-чи?" },
+        { speaker: "Malika", en: "Autumn is nice too, when the leaves change color.", uz: "Куз ҳам яхши, барглар ранг ўзгартирганда." },
+      ],
+    },
+    homeworkPrompt:
+      "Йил фасллари ҳақида 9-10 та гап ёзинг: қайси фаслни ёқтирасиз, ҳар фаслда об-ҳаво қандай. Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 29,
+    icon: "🎉",
+    titleUz: "Байрамлар",
+    titleEn: "Holidays & Celebrations",
+    vocabulary: [
+      { en: "holiday", uz: "байрам", emoji: "🎊", mnemonic: "«холидей» — байрамда «холи»(бўш кун)дан фойдаланасиз." },
+      { en: "celebrate", uz: "нишонламоқ", emoji: "🥳", mnemonic: "«селебрейт» — нишонлаганда «селебрити»(машҳур) каби ажралиб турасиз." },
+      { en: "gift", uz: "совға", emoji: "🎁", mnemonic: "«гифт» — совға «гифт»(қобилият) каби қадрли." },
+      { en: "guest", uz: "меҳмон", emoji: "🚪", mnemonic: "«гест» — меҳмон «гест»(зиёфат)га келади." },
+      { en: "Navruz", uz: "Наврўз", emoji: "🌱", mnemonic: "«наврўз» — ўзбекчадагидек айтилади." },
+      { en: "New Year", uz: "Янги йил", emoji: "🎄", mnemonic: "«нью йиа» — «нью»(янги) сўзидан келади." },
+      { en: "festival", uz: "фестиваль", emoji: "🎪", mnemonic: "«фестивал» — ўзбекчадагидек айтилади." },
+      { en: "special", uz: "алоҳида", emoji: "⭐", mnemonic: "«спешл» — алоҳида кун «спешл»(махсус) бўлади." },
+    ],
+    phrases: [
+      { en: "We celebrate Navruz in March.", uz: "Биз Наврўзни мартда нишонлаймиз." },
+      { en: "I give gifts to my family.", uz: "Мен оилам аъзоларига совғалар бераман." },
+      { en: "We invite guests to our home.", uz: "Биз уйимизга меҳмонлар таклиф қиламиз." },
+      { en: "Happy New Year!", uz: "Янги йилингиз билан!" },
+      { en: "This holiday is very special.", uz: "Бу байрам жуда алоҳида." },
+    ],
+    dialogue: {
+      speakers: ["Malika", "Anvar"],
+      lines: [
+        { speaker: "Malika", en: "Do you celebrate Navruz?", uz: "Наврўзни нишонлайсизми?" },
+        { speaker: "Anvar", en: "Yes! We cook special food and invite guests.", uz: "Ҳа! Биз алоҳида таом пиширамиз ва меҳмон чақирамиз." },
+        { speaker: "Malika", en: "What do you do on New Year?", uz: "Янги йилда нима қиласиз?" },
+        { speaker: "Anvar", en: "We decorate our house and give gifts.", uz: "Уйимизни безаймиз ва совғалар берамиз." },
+        { speaker: "Malika", en: "That sounds fun! My favorite holiday is Navruz too.", uz: "Қизиқ экан! Менинг севимли байрамим ҳам Наврўз." },
+        { speaker: "Anvar", en: "Happy holidays to your family!", uz: "Оилангизга байрам муборак!" },
+      ],
+    },
+    homeworkPrompt:
+      "Байрамлар ҳақида 9-10 та гап ёзинг: қайси байрамларни нишонлайсиз, оилангиз билан нима қиласиз. Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 30,
+    icon: "🛒",
+    titleUz: "Миқдорлар ва харид рўйхати",
+    titleEn: "Quantities & Shopping List",
+    vocabulary: [
+      { en: "some", uz: "бироз", emoji: "🥖", mnemonic: "«сам» — бироз «сам»(кичик миқдор)ни билдиради." },
+      { en: "a lot of", uz: "кўп", emoji: "📦", mnemonic: "«э лот оф» — «лот»(катта миқдор)дан келади." },
+      { en: "a little", uz: "озгина", emoji: "🤏", mnemonic: "«э литл» — «литл»(кичкина)дан келади." },
+      { en: "how much", uz: "қанча (нарх)", emoji: "💰", mnemonic: "«хау мач» — нархни сўраганда ишлатилади." },
+      { en: "how many", uz: "нечта", emoji: "🔢", mnemonic: "«хау мени» — сонни сўраганда ишлатилади." },
+      { en: "kilogram", uz: "килограмм", emoji: "⚖️", mnemonic: "«килограм» — ўзбекчадагидек айтилади." },
+      { en: "list", uz: "рўйхат", emoji: "📝", mnemonic: "«лист» — рўйхат «лист»(қоғоз)га ёзилади." },
+      { en: "need", uz: "керак бўлмоқ", emoji: "❗", mnemonic: "«нид» — керакли нарса «нид»(эҳтиёж)дан келади." },
+    ],
+    phrases: [
+      { en: "I need some bread and milk.", uz: "Менга бироз нон ва сут керак." },
+      { en: "How much does this cost?", uz: "Бу қанча туради?" },
+      { en: "How many apples do you want?", uz: "Нечта олма хоҳлайсиз?" },
+      { en: "I have a little money.", uz: "Менда озгина пул бор." },
+      { en: "We need a lot of vegetables.", uz: "Бизга кўп сабзавот керак." },
+    ],
+    dialogue: {
+      speakers: ["Anvar", "Malika"],
+      lines: [
+        { speaker: "Anvar", en: "I am making a shopping list. What do we need?", uz: "Мен харид рўйхати тузяпман. Бизга нима керак?" },
+        { speaker: "Malika", en: "We need some bread, milk, and a kilogram of apples.", uz: "Бизга бироз нон, сут ва бир килограмм олма керак." },
+        { speaker: "Anvar", en: "How much money do we have?", uz: "Бизда қанча пул бор?" },
+        { speaker: "Malika", en: "We have a little, but it should be enough.", uz: "Бизда озгина бор, лекин етарли бўлиши керак." },
+        { speaker: "Anvar", en: "Great, let's go to the shop.", uz: "Аъло, дўконга борайлик." },
+        { speaker: "Malika", en: "How many eggs do we need too?", uz: "Нечта тухум ҳам керак бизга?" },
+      ],
+    },
+    homeworkPrompt:
+      "Харид рўйхати ҳақида 9-10 та гап ёзинг: нима сотиб олишингиз керак, қанча/нечта керак. Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 31,
+    icon: "🚌",
+    titleUz: "Жамоат транспорти",
+    titleEn: "Public Transport",
+    vocabulary: [
+      { en: "bus stop", uz: "автобус бекати", emoji: "🚏", mnemonic: "«бас стоп» — автобус «стоп»(тўхтайдиган) жой." },
+      { en: "timetable", uz: "жадвал", emoji: "🕐", mnemonic: "«таймтейбл» — «тайм»(вақт) жадвали." },
+      { en: "ticket", uz: "чипта", emoji: "🎫", mnemonic: "«тикит» — чипта «тик»(тез) сотиб олинади." },
+      { en: "fare", uz: "йўл ҳақи", emoji: "💵", mnemonic: "«феа» — йўл ҳақи «фэа»(адолатли) миқдорда." },
+      { en: "seat", uz: "ўриндиқ", emoji: "💺", mnemonic: "«сит» — ўриндиққа «сит»(ўтирасиз)." },
+      { en: "get on", uz: "минмоқ", emoji: "🚶‍♂️", mnemonic: "«гет он» — автобусга «он»(устига) минасиз." },
+      { en: "get off", uz: "тушмоқ", emoji: "🚶", mnemonic: "«гет офф» — автобусдан «офф»(пастга) тушасиз." },
+      { en: "crowded", uz: "гавжум", emoji: "👥", mnemonic: "«краудед» — гавжум жойда «крауд»(тўда) бор." },
+    ],
+    phrases: [
+      { en: "Where is the nearest bus stop?", uz: "Энг яқин автобус бекати қаерда?" },
+      { en: "What time does the bus arrive?", uz: "Автобус соат нечада келади?" },
+      { en: "I need to get off here.", uz: "Мен шу ерда тушишим керак." },
+      { en: "The bus is very crowded today.", uz: "Бугун автобус жуда гавжум." },
+      { en: "How much is the fare?", uz: "Йўл ҳақи қанча?" },
+    ],
+    dialogue: {
+      speakers: ["Malika", "Anvar"],
+      lines: [
+        { speaker: "Malika", en: "Where is the nearest bus stop?", uz: "Энг яқин автобус бекати қаерда?" },
+        { speaker: "Anvar", en: "It's just around the corner.", uz: "У бурчакнинг ортида." },
+        { speaker: "Malika", en: "What time does the bus arrive?", uz: "Автобус соат нечада келади?" },
+        { speaker: "Anvar", en: "It comes every fifteen minutes.", uz: "У ҳар ўн беш дақиқада келади." },
+        { speaker: "Malika", en: "The bus is very crowded today!", uz: "Бугун автобус жуда гавжум!" },
+        { speaker: "Anvar", en: "Yes, let's find a seat quickly.", uz: "Ҳа, тезда ўриндиқ топайлик." },
+      ],
+    },
+    homeworkPrompt:
+      "Жамоат транспорти ҳақида 9-10 та гап ёзинг: қандай транспортда мактабга борасиз, бекатда қанча кутасиз. Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 32,
+    icon: "🔄",
+    titleUz: "Ҳар доим, баъзан, ҳеч қачон",
+    titleEn: "Adverbs of Frequency",
+    vocabulary: [
+      { en: "always", uz: "ҳар доим", emoji: "🔁", mnemonic: "«олвейз» — «ол»(ҳамма) вақт деганидан келади." },
+      { en: "usually", uz: "одатда", emoji: "📆", mnemonic: "«южуали» — «южуал»(одатий)дан келади." },
+      { en: "sometimes", uz: "баъзан", emoji: "🕓", mnemonic: "«самтаймз» — «сам»(баъзи) вақтларда." },
+      { en: "never", uz: "ҳеч қачон", emoji: "🚫", mnemonic: "«невер» — «нев»(ҳеч)дан келади." },
+      { en: "often", uz: "тез-тез", emoji: "🔂", mnemonic: "«офтен» — «офт»(кўп марта)дан келади." },
+      { en: "rarely", uz: "кам ҳолда", emoji: "🌙", mnemonic: "«реали» — «рэа»(кам)дан келади." },
+      { en: "routine", uz: "тартиб", emoji: "📋", mnemonic: "«рутин» — «рут»(йўл)дан такрорланувчи тартиб." },
+      { en: "habit", uz: "одат", emoji: "🔂", mnemonic: "«хабит» — «хабит»уал(одатий)дан келади." },
+    ],
+    phrases: [
+      { en: "I always brush my teeth.", uz: "Мен ҳар доим тишимни ювaman." },
+      { en: "She usually wakes up early.", uz: "У одатда эрта уйғонади." },
+      { en: "We sometimes watch movies together.", uz: "Биз баъзан бирга кино кўрамиз." },
+      { en: "He never eats breakfast.", uz: "У ҳеч қачон нонушта қилмайди." },
+      { en: "I often read books before bed.", uz: "Мен ётишдан олдин тез-тез китоб ўqiyman." },
+    ],
+    dialogue: {
+      speakers: ["Anvar", "Malika"],
+      lines: [
+        { speaker: "Anvar", en: "Do you always do your homework right after school?", uz: "Сиз ҳар доим мактабдан кейин уй вазифангизни қиласизми?" },
+        { speaker: "Malika", en: "Usually, yes. Sometimes I play first.", uz: "Одатда, ҳа. Баъзан аввал ўйнайман." },
+        { speaker: "Anvar", en: "I never study right after school. I need a break!", uz: "Мен мактабдан кейин ҳеч қачон ўqиmайман. Менга дам керак!" },
+        { speaker: "Malika", en: "I understand. Do you often read books?", uz: "Тушунарли. Сиз тез-тез китоб ўqiysizmi?" },
+        { speaker: "Anvar", en: "Yes, I often read before bed.", uz: "Ҳа, мен ётишдан олдин тез-тез ўqiyman." },
+        { speaker: "Malika", en: "That's a great habit!", uz: "Бу ажойиб одат!" },
+      ],
+    },
+    homeworkPrompt:
+      "Кундалик одатларингиз ҳақида 9-10 та гап ёзинг (always/usually/sometimes/never сўзларидан фойдаланинг). Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 33,
+    icon: "⏳",
+    titleUz: "Ҳозир нима қиляпман",
+    titleEn: "Present Continuous",
+    vocabulary: [
+      { en: "now", uz: "ҳозир", emoji: "⏰", mnemonic: "«нау» — «нау»(айнан шу пайт)дан келади." },
+      { en: "doing", uz: "қилаётган", emoji: "🔄", mnemonic: "«дуинг» — «ду»(қилмоқ)+«инг»дан ясалади." },
+      { en: "playing", uz: "ўйнаётган", emoji: "🎮", mnemonic: "«плейинг» — «плей»(ўйнамоқ)+«инг»дан ясалади." },
+      { en: "reading", uz: "ўқиётган", emoji: "📖", mnemonic: "«ридинг» — «рид»(ўqiмоқ)+«инг»дан ясалади." },
+      { en: "writing", uz: "ёзаётган", emoji: "✍️", mnemonic: "«райтинг» — «райт»(ёзмоқ)+«инг»дан ясалади." },
+      { en: "eating", uz: "еётган", emoji: "🍽️", mnemonic: "«итинг» — «ит»(емоқ)+«инг»дан ясалади." },
+      { en: "sleeping", uz: "ухлаётган", emoji: "😴", mnemonic: "«слипинг» — «слип»(ухламоқ)+«инг»дан ясалади." },
+      { en: "right now", uz: "худди ҳозир", emoji: "⏱️", mnemonic: "«райт нау» — «райт»(айнан)+«нау»(ҳозир)дан келади." },
+    ],
+    phrases: [
+      { en: "I am reading a book now.", uz: "Мен ҳозир китоб ўqiyapman." },
+      { en: "She is playing football right now.", uz: "У ҳозир футбол ўйнаяпти." },
+      { en: "What are you doing?", uz: "Нима қиляпсиз?" },
+      { en: "They are eating lunch.", uz: "Улар тушлик қиляпти." },
+      { en: "He is sleeping now.", uz: "У ҳозир ухлаяпти." },
+    ],
+    dialogue: {
+      speakers: ["Malika", "Anvar"],
+      lines: [
+        { speaker: "Malika", en: "Hi Anvar, what are you doing right now?", uz: "Салом Анвар, ҳозир нима қиляпсиз?" },
+        { speaker: "Anvar", en: "I am reading my English book. What about you?", uz: "Мен инглиз тили китобимни ўqiyapman. Сиз-чи?" },
+        { speaker: "Malika", en: "I am writing my homework.", uz: "Мен уй вазифамни ёзяпман." },
+        { speaker: "Anvar", en: "Is your sister playing outside?", uz: "Синглингиз ташqarida ўйнаяптими?" },
+        { speaker: "Malika", en: "No, she is sleeping right now.", uz: "Йўq, у ҳозир ухлаяпти." },
+        { speaker: "Anvar", en: "Okay, talk to you later!", uz: "Хўп, кейинроқ гаплашамиз!" },
+      ],
+    },
+    homeworkPrompt:
+      "Ҳозир нима қилаётганингиз ва оила аъзоларингиз нима қилаётгани ҳақида 9-10 та гап ёзинг (is/am/are + ...ing қолипидан фойдаланинг). Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  // ============================================================
+  // PART 5 — lessons 34-50: neighborhood, social language (invitations,
+  // suggestions, permission, opinions), possessions, descriptive
+  // adjectives, dates/months, and a culminating review lesson.
+  // ============================================================
+
+  {
+    id: 34,
+    icon: "🏥",
+    titleUz: "Шифокорда",
+    titleEn: "At the Doctor's",
+    vocabulary: [
+      { en: "symptom", uz: "касаллик белгиси", emoji: "🤒", mnemonic: "«симптом» — ўзбекчадагидек айтилади." },
+      { en: "fever", uz: "иситма", emoji: "🌡️", mnemonic: "«фивер» — иситмада тана «фив»(қиздиради)." },
+      { en: "cough", uz: "йўтал", emoji: "😷", mnemonic: "«коф» — йўталганда «коф-коф» товуш чиқади." },
+      { en: "appointment", uz: "қабул (вақти)", emoji: "📅", mnemonic: "«эпойнтмент» — «эпойнт»(белгилаш)дан келади." },
+      { en: "prescription", uz: "дори рецепти", emoji: "💊", mnemonic: "«прискрипшн» — «прискрайб»(тавсия)дан келади." },
+      { en: "rest", uz: "дам олмоқ", emoji: "🛌", mnemonic: "«рест» — дам олганда «рест»(тинчланасиз)." },
+      { en: "better", uz: "яхшироқ", emoji: "😊", mnemonic: "«бетер» — «бет»(яхши)+«ер»дан ясалади." },
+      { en: "sick", uz: "касал", emoji: "🤢", mnemonic: "«сик» — касал бўлганда «сиқ»иласиз." },
+    ],
+    phrases: [
+      { en: "I have a fever and a cough.", uz: "Менда иситма ва йўтал бор." },
+      { en: "I need to make an appointment.", uz: "Менга қабулга ёзилиш керак." },
+      { en: "The doctor gave me a prescription.", uz: "Шифокор менга рецепт берди." },
+      { en: "You need to rest.", uz: "Сизга дам олиш керак." },
+      { en: "I feel better now.", uz: "Ҳозир ўзимни яхшироқ ҳис қиляпман." },
+    ],
+    dialogue: {
+      speakers: ["Anvar", "Doctor"],
+      lines: [
+        { speaker: "Anvar", en: "I don't feel well. I have a fever and a cough.", uz: "Ўзимни яхши ҳис қилмаяпман. Менда иситма ва йўтал бор." },
+        { speaker: "Malika", en: "You should make an appointment with the doctor.", uz: "Сиз шифокорга қабулга ёзилишингиз керак." },
+        { speaker: "Doctor", en: "What are your symptoms?", uz: "Касаллик белгиларингиз қандай?" },
+        { speaker: "Anvar", en: "I have a fever and a cough.", uz: "Менда иситма ва йўтал бор." },
+        { speaker: "Doctor", en: "Take this medicine and rest at home.", uz: "Бу дорини ичинг ва уйда дам олинг." },
+        { speaker: "Anvar", en: "Thank you, doctor. I hope I feel better soon.", uz: "Раҳмат, шифокор. Тезда яхши бўлиб қолишимга умид қиляпман." },
+      ],
+    },
+    homeworkPrompt:
+      "Шифокорга бориш ҳақида 9-10 та гап ёзинг: қандай белгилар бўлганда шифокорга борасиз, шифокор нима дейди. Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 35,
+    icon: "🏘️",
+    titleUz: "Маҳаллам",
+    titleEn: "My Neighborhood",
+    vocabulary: [
+      { en: "neighborhood", uz: "маҳалла", emoji: "🏘️", mnemonic: "«нейборхуд» — «нейбор»(қўшни)лар яшайдиган жой." },
+      { en: "neighbor", uz: "қўшни", emoji: "🧑‍🤝‍🧑", mnemonic: "«нейбор» — «ниа»(яқин)да яшайдиган одам." },
+      { en: "park", uz: "парк", emoji: "🌳", mnemonic: "«парк» — ўзбекчадагидек айтилади." },
+      { en: "mosque", uz: "масжид", emoji: "🕌", mnemonic: "«моск» — ўзбекчадаги «масжид»га яқин." },
+      { en: "shop", uz: "дўкон", emoji: "🏪", mnemonic: "«шоп» — дўконга «шоп-шоп» юриб борасиз." },
+      { en: "street", uz: "кўча", emoji: "🛣️", mnemonic: "«стрит» — кўчада «стрим»(оқим)дай одамлар юради." },
+      { en: "nearby", uz: "яқин атрофда", emoji: "📍", mnemonic: "«ниабай» — «ниа»(яқин)дан келади." },
+      { en: "quiet", uz: "тинч", emoji: "🤫", mnemonic: "«квайет» — тинч жойда «квай»(секин) овоз чиқади." },
+    ],
+    phrases: [
+      { en: "My neighbor is very kind.", uz: "Қўшним жуда меҳрибон." },
+      { en: "There is a park near my house.", uz: "Уйим яқинида парк бор." },
+      { en: "I walk to the shop every day.", uz: "Мен ҳар куни дўконга пиёда бораман." },
+      { en: "Our neighborhood is quiet.", uz: "Бизнинг маҳалламиз тинч." },
+      { en: "What is your neighborhood like?", uz: "Сизнинг маҳаллангиз қандай?" },
+    ],
+    dialogue: {
+      speakers: ["Malika", "Anvar"],
+      lines: [
+        { speaker: "Malika", en: "What is your neighborhood like, Anvar?", uz: "Маҳаллангиз қандай, Анвар?" },
+        { speaker: "Anvar", en: "It's quiet and friendly. There is a park nearby.", uz: "У тинч ва дўстона. Яқин атрофда парк бор." },
+        { speaker: "Malika", en: "Do you know your neighbors?", uz: "Қўшниларингизни биласизми?" },
+        { speaker: "Anvar", en: "Yes, my neighbor helps us often. He is very kind.", uz: "Ҳа, қўшним бизга тез-тез ёрдам беради. У жуда меҳрибон." },
+        { speaker: "Malika", en: "That's nice. I love my neighborhood too.", uz: "Яхши экан. Мен ҳам маҳалламни яхши кўраман." },
+        { speaker: "Anvar", en: "Let's walk to the park together sometime!", uz: "Қачондир биргаликда паркка боринг!" },
+      ],
+    },
+    homeworkPrompt:
+      "Маҳаллангиз ҳақида 9-10 та гап ёзинг: атрофда нима бор, қўшниларингиз қандай. Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 36,
+    icon: "🎈",
+    titleUz: "Зиёфат ва таклифнома",
+    titleEn: "Party & Invitations",
+    vocabulary: [
+      { en: "invite", uz: "таклиф қилмоқ", emoji: "✉️", mnemonic: "«инвайт» — «инвайт»(чақирмоқ)дан келади." },
+      { en: "invitation", uz: "таклифнома", emoji: "💌", mnemonic: "«инвитейшн» — «инвайт»(таклиф)дан ясалади." },
+      { en: "birthday party", uz: "туғилган кун зиёфати", emoji: "🎂", mnemonic: "«бёрздей парти» — «бёрздей»(туғилган кун)+«парти»(зиёфат)." },
+      { en: "come", uz: "келмоқ", emoji: "🚶", mnemonic: "«кам» — «кам»(келмоқ)дан айнан ўзи." },
+      { en: "balloon", uz: "шар", emoji: "🎈", mnemonic: "«балун» — ўзбекчадагидек айтилади." },
+      { en: "cake", uz: "торт", emoji: "🎂", mnemonic: "«кейк» — торт «кейк»(ширин) бўлади." },
+      { en: "guest", uz: "меҳмон", emoji: "🧑‍🤝‍🧑", mnemonic: "«гест» — меҳмон «гест»(зиёфат)га келади." },
+      { en: "game", uz: "ўйин", emoji: "🎮", mnemonic: "«гейм» — ўйинда «гей»(ғайрат) билан ютасиз." },
+    ],
+    phrases: [
+      { en: "I would like to invite you to my party.", uz: "Сизни зиёфатимга таклиф қилмоқчиман." },
+      { en: "Can you come to my birthday party?", uz: "Туғилган кун зиёфатимга кела оласизми?" },
+      { en: "Thank you for the invitation.", uz: "Таклиф учун раҳмат." },
+      { en: "We are going to have cake and balloons.", uz: "Бизда торт ва шарлар бўлади." },
+      { en: "What time does the party start?", uz: "Зиёфат соат нечада бошланади?" },
+    ],
+    dialogue: {
+      speakers: ["Anvar", "Malika"],
+      lines: [
+        { speaker: "Anvar", en: "I would like to invite you to my birthday party.", uz: "Сизни туғилган кун зиёфатимга таклиф қилмоқчиман." },
+        { speaker: "Malika", en: "Thank you! What time does it start?", uz: "Раҳмат! У соат нечада бошланади?" },
+        { speaker: "Anvar", en: "It starts at five o'clock on Saturday.", uz: "У шанба куни соат бешда бошланади." },
+        { speaker: "Malika", en: "I will come! Should I bring anything?", uz: "Мен келaman! Нимадир олиб келишим керакми?" },
+        { speaker: "Anvar", en: "Just bring yourself! We will have cake and games.", uz: "Фақат ўзингиз келинг! Бизда торт ва ўйинлар бўлади." },
+        { speaker: "Malika", en: "I can't wait!", uz: "Сабрсизлик билан кутяпман!" },
+      ],
+    },
+    homeworkPrompt:
+      "Зиёфат ва таклифнома ҳақида 9-10 та гап ёзинг: кимни туғилган кунингизга таклиф қиласиз, зиёфатда нима бўлади. Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 37,
+    icon: "💭",
+    titleUz: "Мактаб фанлари ҳақида фикр",
+    titleEn: "School Opinions",
+    vocabulary: [
+      { en: "because", uz: "чунки", emoji: "🔗", mnemonic: "«бикоз» — сабабни билдиради." },
+      { en: "subject", uz: "фан", emoji: "📚", mnemonic: "«сабжект» — ҳар бир фан бир мавзу." },
+      { en: "difficult", uz: "қийин", emoji: "😓", mnemonic: "«дификалт» — «дификалт»и (қийинчилик)дан келади." },
+      { en: "easy", uz: "осон", emoji: "😌", mnemonic: "«изи» — осон нарса «изи» деб аталади." },
+      { en: "interesting", uz: "қизиқарли", emoji: "🤩", mnemonic: "«интерестинг» — «интерест»(қизиқиш)дан келади." },
+      { en: "boring", uz: "зерикарли", emoji: "😴", mnemonic: "«боринг» — «бор»(зерика)дан келади." },
+      { en: "favorite", uz: "севимли", emoji: "❤️", mnemonic: "«фейворит» — «фейвор»(маъқуллаш)дан келади." },
+      { en: "opinion", uz: "фикр", emoji: "💬", mnemonic: "«опинион» — «опинион»(қараш)дан келади." },
+    ],
+    phrases: [
+      { en: "I like math because it is easy for me.", uz: "Мен математикани ёқтираман, чунки у мен учун осон." },
+      { en: "English is interesting, not boring.", uz: "Инглиз тили қизиқарли, зерикарли эмас." },
+      { en: "I don't like history because it is difficult.", uz: "Мен тарихни ёқтирмайман, чунки у қийин." },
+      { en: "What is your opinion about this subject?", uz: "Бу фан ҳақида фикрингиз қандай?" },
+      { en: "Science is my favorite subject.", uz: "Табиатшунослик менинг севимли фаним." },
+    ],
+    dialogue: {
+      speakers: ["Malika", "Anvar"],
+      lines: [
+        { speaker: "Malika", en: "What is your favorite subject, Anvar?", uz: "Севимли фанингиз нима, Анвар?" },
+        { speaker: "Anvar", en: "I like English because it is interesting.", uz: "Мен инглиз тилини ёқтираман, чунки у қизиқарли." },
+        { speaker: "Malika", en: "I think math is difficult, but I like it.", uz: "Менимча математика қийин, лекин мен уни ёqтираман." },
+        { speaker: "Anvar", en: "Why do you like a difficult subject?", uz: "Нега қийин фанни ёқтирасиз?" },
+        { speaker: "Malika", en: "Because it makes me think! What about boring subjects?", uz: "Чунки у мени ўйлантиради! Зерикарли фанлар-чи?" },
+        { speaker: "Anvar", en: "I find history a little boring, honestly.", uz: "Тўғрисини айтганда, тарих менга бироз зерикарли туюлади." },
+      ],
+    },
+    homeworkPrompt:
+      "Мактаб фанлари ҳақидаги фикрингизни 9-10 та гап билан ёзинг: қайси фанни нима учун ёқтирасиз/ёқтирмайсиз ('because' сўзидан фойдаланинг). Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 38,
+    icon: "💡",
+    titleUz: "Таклиф бермоқ",
+    titleEn: "Making Suggestions",
+    vocabulary: [
+      { en: "suggestion", uz: "таклиф", emoji: "💡", mnemonic: "«сагжешн» — «сагжест»(таклиф қилмоқ)дан келади." },
+      { en: "let's", uz: "келинг...", emoji: "🙌", mnemonic: "«летс» — «лет ас»(бизга рухсат бер)дан қисқарган." },
+      { en: "why don't we", uz: "нега биз...қилмаймиз", emoji: "🤔", mnemonic: "«вай донт ви» — таклиф беришда ишлатилади." },
+      { en: "shall we", uz: "...қиламизми", emoji: "❓", mnemonic: "«шал ви» — таклиф сўраганда ишлатилади." },
+      { en: "idea", uz: "ғоя", emoji: "💭", mnemonic: "«айдиа» — ўзбекчадаги «идея»га яқин." },
+      { en: "sounds good", uz: "яхши эшитилади", emoji: "👍", mnemonic: "«саундз гуд» — «саунд»(товуш)+«гуд»(яхши)." },
+      { en: "agree", uz: "рози бўлмоқ", emoji: "🤝", mnemonic: "«эгри» — «эгри»(рози)дан келади." },
+      { en: "disagree", uz: "рози бўлмаслик", emoji: "🙅", mnemonic: "«дисэгри» — «дис»(эмас)+«эгри»(рози)." },
+    ],
+    phrases: [
+      { en: "Let's go to the park.", uz: "Паркка борайлик." },
+      { en: "Why don't we watch a movie?", uz: "Нега биз кино кўрмаймиз?" },
+      { en: "Shall we start now?", uz: "Ҳозир бошлаймизми?" },
+      { en: "That sounds like a good idea!", uz: "Бу яхши ғоя каби эшитилади!" },
+      { en: "I agree with you.", uz: "Мен сиз билан розиман." },
+    ],
+    dialogue: {
+      speakers: ["Anvar", "Malika"],
+      lines: [
+        { speaker: "Anvar", en: "Let's go to the park this weekend.", uz: "Шу дам олиш куни паркка борайлик." },
+        { speaker: "Malika", en: "That sounds like a good idea! Why don't we invite Muhammad too?", uz: "Бу яхши ғоя каби эшитилади! Нега биз Муҳаммадни ҳам таклиф қилмаймиз?" },
+        { speaker: "Anvar", en: "Great idea! Shall we call him now?", uz: "Ажойиб ғоя! Унга ҳозир қўнғироқ қиламизми?" },
+        { speaker: "Malika", en: "Yes, let's call him.", uz: "Ҳа, унга қўнғироқ қилайлик." },
+        { speaker: "Anvar", en: "I agree, the more the better!", uz: "Розиман, кўпроқ бўлса яхши!" },
+        { speaker: "Malika", en: "Perfect, see you at the park!", uz: "Аъло, паркда кўришгунча!" },
+      ],
+    },
+    homeworkPrompt:
+      "Таклифлар ҳақида 9-10 та гап ёзинг: дўстларингизга нима таклиф қиласиз ('Let's', 'Why don't we', 'Shall we' қолипларидан фойдаланинг). Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 39,
+    icon: "🙋",
+    titleUz: "Рухсат сўраш",
+    titleEn: "Asking Permission",
+    vocabulary: [
+      { en: "permission", uz: "рухсат", emoji: "✅", mnemonic: "«пермишн» — «пермит»(рухсат бермоқ)дан келади." },
+      { en: "may", uz: "мумкинми", emoji: "❓", mnemonic: "«мей» — рухсат сўраганда ишлатилади." },
+      { en: "allow", uz: "рухсат бермоқ", emoji: "👍", mnemonic: "«элоу» — «элоу»(имкон бермоқ)дан келади." },
+      { en: "borrow", uz: "қарзга олмоқ", emoji: "🤲", mnemonic: "«бороу» — вақтинча олишни билдиради." },
+      { en: "enter", uz: "кирмоқ", emoji: "🚪", mnemonic: "«энтер» — «энтранс»(кириш)дан келади." },
+      { en: "leave", uz: "чиқиб кетмоқ", emoji: "🚶", mnemonic: "«лив» — «лив»(тарк этмоқ)дан айнан ўзи." },
+      { en: "sure", uz: "албатта", emoji: "😊", mnemonic: "«шуа» — ишончли жавоб «шуа» дейилади." },
+      { en: "sorry", uz: "кечирасиз", emoji: "🙏", mnemonic: "«сори» — кечирим сўраганда ишлатилади." },
+    ],
+    phrases: [
+      { en: "May I come in?", uz: "Кирсам майлими?" },
+      { en: "Can I borrow your book?", uz: "Китобингизни олсам майлими?" },
+      { en: "May I leave the room?", uz: "Хонадан чиқсам майлими?" },
+      { en: "Yes, of course you may.", uz: "Ҳа, албатта мумкин." },
+      { en: "Sorry, you may not.", uz: "Кечирасиз, мумкин эмас." },
+    ],
+    dialogue: {
+      speakers: ["Anvar", "Teacher"],
+      lines: [
+        { speaker: "Anvar", en: "May I come in, teacher?", uz: "Кирсам майлими, ўқитувчи?" },
+        { speaker: "Teacher", en: "Yes, of course you may.", uz: "Ҳа, албатта мумкин." },
+        { speaker: "Anvar", en: "Thank you. May I borrow a pencil too?", uz: "Раҳмат. Қалам ҳам олсам майлими?" },
+        { speaker: "Malika", en: "Sure, here you are.", uz: "Албатта, мана." },
+        { speaker: "Anvar", en: "May I leave early today? I have an appointment.", uz: "Бугун эрта кета оламанми? Менда қабул бор." },
+        { speaker: "Teacher", en: "Yes, you may leave after the lesson.", uz: "Ҳа, дарсдан кейин кета оласиз." },
+      ],
+    },
+    homeworkPrompt:
+      "Рухсат сўраш ҳақида 9-10 та гап ёзинг ('May I...?' қолипидан фойдаланинг): нималар учун рухсат сўрайсиз. Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 40,
+    icon: "🎒",
+    titleUz: "Шахсий буюмлар",
+    titleEn: "Possessions",
+    vocabulary: [
+      { en: "mine", uz: "меники", emoji: "☝️", mnemonic: "«майн» — «май»(мен)+«н» шахсий эгалик." },
+      { en: "yours", uz: "сизники", emoji: "👉", mnemonic: "«юаз» — «ю»(сиз)+«аз» шахсий эгалик." },
+      { en: "his", uz: "уники (эркак)", emoji: "🧑", mnemonic: "«хиз» — «хи»(у эркак)+«з» эгалик." },
+      { en: "hers", uz: "уники (аёл)", emoji: "👩", mnemonic: "«хёрз» — «хёр»(у аёл)+«з» эгалик." },
+      { en: "whose", uz: "кимники", emoji: "❓", mnemonic: "«хуз» — эгасини сўраганда ишлатилади." },
+      { en: "belong", uz: "тегишли бўлмоқ", emoji: "🔗", mnemonic: "«билонг» — «билонг»(тегишли)дан айнан ўзи." },
+      { en: "own", uz: "ўзига тегишли", emoji: "🏠", mnemonic: "«оун» — «оун»(эгалик)дан айнан ўзи." },
+      { en: "share", uz: "баҳам кўрмоқ", emoji: "🤝", mnemonic: "«шеа» — «шеа»(бўлиш)дан айнан ўзи." },
+    ],
+    phrases: [
+      { en: "Is this pen yours or mine?", uz: "Бу ручка сизникими ёки меникими?" },
+      { en: "Whose bag is this?", uz: "Бу кимнинг сумкаси?" },
+      { en: "This book is hers, not his.", uz: "Бу китоб унинг (аёл), унинг (эркак) эмас." },
+      { en: "We share our toys.", uz: "Биз ўйинчоқларимизни бирга ишлатамиз." },
+      { en: "That backpack is mine.", uz: "Анави рюкзак меники." },
+    ],
+    dialogue: {
+      speakers: ["Malika", "Anvar"],
+      lines: [
+        { speaker: "Malika", en: "Whose notebook is this?", uz: "Бу кимнинг дафтари?" },
+        { speaker: "Anvar", en: "I think it's mine. Let me check... yes, it's mine!", uz: "Менимча, меники. Текшириб кўрай... ҳа, меники!" },
+        { speaker: "Malika", en: "Is this pencil yours too?", uz: "Бу қалам ҳам сизникими?" },
+        { speaker: "Anvar", en: "No, that one is hers — it belongs to my sister.", uz: "Йўқ, у уники — синглимга тегишли." },
+        { speaker: "Malika", en: "We should be careful not to mix our things.", uz: "Биз буюмларимизни аралаштириб юбормаслик учун эҳтиёт бўлишимиз керак." },
+        { speaker: "Anvar", en: "You're right, let's write our names on them.", uz: "Тўғри айтасиз, уларга исмимизни ёзайлик." },
+      ],
+    },
+    homeworkPrompt:
+      "Шахсий буюмларингиз ҳақида 9-10 та гап ёзинг (mine/yours/his/hers сўзларидан фойдаланинг). Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 41,
+    icon: "🎬",
+    titleUz: "Тасвирловчи сифатлар",
+    titleEn: "Descriptive Adjectives",
+    vocabulary: [
+      { en: "exciting", uz: "ҳаяжонли", emoji: "🤩", mnemonic: "«эксайтинг» — «эксайт»(ҳаяжонлантирмоқ)дан келади." },
+      { en: "dangerous", uz: "хавфли", emoji: "⚠️", mnemonic: "«дейнжерос» — «дейнжер»(хавф)дан келади." },
+      { en: "safe", uz: "хавфсиз", emoji: "🛡️", mnemonic: "«сейф» — «сейф»(сейф қутидай ишончли)дан келади." },
+      { en: "amazing", uz: "ажойиб", emoji: "🌟", mnemonic: "«эмейзинг» — «эмейз»(ҳайратда қолдирмоқ)дан келади." },
+      { en: "interesting", uz: "қизиқарли", emoji: "🤔", mnemonic: "«интерестинг» — «интерест»(қизиқиш)дан келади." },
+      { en: "boring", uz: "зерикарли", emoji: "😴", mnemonic: "«боринг» — «бор»(зерика)дан келади." },
+      { en: "difficult", uz: "қийин", emoji: "😓", mnemonic: "«дификалт» — «дификалт»и (қийинчилик)дан келади." },
+      { en: "easy", uz: "осон", emoji: "😌", mnemonic: "«изи» — осон нарса «изи» деб аталади." },
+    ],
+    phrases: [
+      { en: "This movie is very exciting.", uz: "Бу фильм жуда ҳаяжонли." },
+      { en: "That was an amazing trip!", uz: "Бу ажойиб сафар эди!" },
+      { en: "Swimming in the sea can be dangerous.", uz: "Денгизда сузиш хавфли бўлиши мумкин." },
+      { en: "This place is safe for children.", uz: "Бу жой болалар учун хавфсиз." },
+      { en: "I think chemistry is fascinating.", uz: "Менимча кимё ажойиб." },
+    ],
+    dialogue: {
+      speakers: ["Anvar", "Malika"],
+      lines: [
+        { speaker: "Anvar", en: "Did you watch the new movie?", uz: "Янги фильмни кўрдингизми?" },
+        { speaker: "Malika", en: "Yes! It was so exciting and amazing.", uz: "Ҳа! У жуда ҳаяжонли ва ажойиб эди." },
+        { speaker: "Anvar", en: "I heard it's a bit dangerous in some scenes.", uz: "Баъзи саҳналарда бироз хавфли деб эшитдим." },
+        { speaker: "Malika", en: "Don't worry, it's completely safe to watch!", uz: "Хавотир олманг, уни томоша қилиш мутлақо хавфсиз!" },
+        { speaker: "Anvar", en: "Haha, I meant the story, not for us!", uz: "Ҳа-ҳа, мен воqeaни назарда тутдим, бизга эмас!" },
+        { speaker: "Malika", en: "Oh! Yes, some parts were quite intense.", uz: "Оҳ! Ҳа, баъзи қисмлари жуда кучли эди." },
+      ],
+    },
+    homeworkPrompt:
+      "Тасвирловчи сифатлардан фойдаланиб 9-10 та гап ёзинг: нима қизиқарли/зерикарли/хавфли деб ҳисоблайсиз. Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 42,
+    icon: "📆",
+    titleUz: "Йил ойлари",
+    titleEn: "Months of the Year",
+    vocabulary: [
+      { en: "month", uz: "ой", emoji: "🗓️", mnemonic: "«манс» — «манс»(муддат) билан ўлчанади." },
+      { en: "January", uz: "январь", emoji: "❄️", mnemonic: "«жанюари» — ўзбекчадаги «январь»га яқин." },
+      { en: "June", uz: "июнь", emoji: "☀️", mnemonic: "«жун» — ўзбекчадаги «июнь»га яқин." },
+      { en: "September", uz: "сентябрь", emoji: "🍂", mnemonic: "«септембер» — ўзбекчадаги «сентябрь»га яқин." },
+      { en: "December", uz: "декабрь", emoji: "🎄", mnemonic: "«десембер» — ўзбекчадаги «декабрь»га яқин." },
+      { en: "calendar", uz: "тақвим", emoji: "📅", mnemonic: "«календар» — ўзбекчадагидек айтилади." },
+      { en: "birthday", uz: "туғилган кун", emoji: "🎂", mnemonic: "«бёрздей» — «бёрз»(туғилиш)+«дей»(кун)." },
+      { en: "school year", uz: "ўқув йили", emoji: "🏫", mnemonic: "«скул йиа» — «скул»(мактаб)+«йиа»(йил)." },
+    ],
+    phrases: [
+      { en: "My birthday is in June.", uz: "Туғилган куним июнда." },
+      { en: "School starts in September.", uz: "Мактаб сентябрда бошланади." },
+      { en: "New Year is in January.", uz: "Янги йил январда." },
+      { en: "Summer months are June, July, and August.", uz: "Ёз ойлари июн, июл ва августдир." },
+      { en: "What month is it now?", uz: "Ҳозир қайси ой?" },
+    ],
+    dialogue: {
+      speakers: ["Malika", "Anvar"],
+      lines: [
+        { speaker: "Malika", en: "What month is your birthday, Anvar?", uz: "Туғилган кунингиз қайси ой, Анвар?" },
+        { speaker: "Anvar", en: "My birthday is in June. When is yours?", uz: "Туғилган куним июнда. Сизники-чи?" },
+        { speaker: "Malika", en: "Mine is in December, close to New Year!", uz: "Меники декабрда, Янги йилга яқин!" },
+        { speaker: "Anvar", en: "That's fun! School starts in September, right?", uz: "Қизиқ экан! Мактаб сентябрда бошланади-ку?" },
+        { speaker: "Malika", en: "Yes, and it ends in May.", uz: "Ҳа, ва майда тугайди." },
+        { speaker: "Anvar", en: "I love summer months the most.", uz: "Мен ёз ойларини энг кўп яхши кўраман." },
+      ],
+    },
+    homeworkPrompt:
+      "Ойлар ҳақида 9-10 та гап ёзинг: туғилган кунингиз қайси ойда, севимли ойингиз қайси. Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 43,
+    icon: "🔢",
+    titleUz: "Тартиб сонлар ва саналар",
+    titleEn: "Ordinal Numbers & Dates",
+    vocabulary: [
+      { en: "first", uz: "биринчи", emoji: "🥇", mnemonic: "«фёрст» — «фёрст»(биринчи)дан айнан ўзи." },
+      { en: "second", uz: "иккинчи", emoji: "🥈", mnemonic: "«секонд» — «секонд»(иккинчи)дан айнан ўзи." },
+      { en: "third", uz: "учинчи", emoji: "🥉", mnemonic: "«тхёрд» — «тхёрд»(учинчи)дан айнан ўзи." },
+      { en: "fifth", uz: "бешинчи", emoji: "5️⃣", mnemonic: "«фифс» — «файв»(беш)+«тс» тартиб сон." },
+      { en: "tenth", uz: "ўнинчи", emoji: "🔟", mnemonic: "«тенс» — «тен»(ўн)+«тс» тартиб сон." },
+      { en: "date", uz: "сана", emoji: "📅", mnemonic: "«дейт» — сана «дейт»(белгиланган кун)дан келади." },
+      { en: "birthday", uz: "туғилган кун", emoji: "🎂", mnemonic: "«бёрздей» — «бёрз»(туғилиш)+«дей»(кун)." },
+      { en: "anniversary", uz: "юбилей", emoji: "🎉", mnemonic: "«энивёрсари» — «энюал»(йиллик)дан келади." },
+    ],
+    phrases: [
+      { en: "Today is the first of May.", uz: "Бугун майнинг биринчиси." },
+      { en: "My birthday is on the fifth of June.", uz: "Туғилган куним июннинг бешинчисида." },
+      { en: "He came in second place.", uz: "У иккинчи ўринни олди." },
+      { en: "This is our tenth lesson!", uz: "Бу бизнинг ўнинчи дарсимиз!" },
+      { en: "What is the date today?", uz: "Бугун нечанчи сана?" },
+    ],
+    dialogue: {
+      speakers: ["Anvar", "Malika"],
+      lines: [
+        { speaker: "Anvar", en: "What is the date today?", uz: "Бугун нечанчи сана?" },
+        { speaker: "Malika", en: "It is the third of March.", uz: "Бугун мартнинг учинчиси." },
+        { speaker: "Anvar", en: "My birthday is on the fifth of March!", uz: "Туғилган куним мартнинг бешинчисида!" },
+        { speaker: "Malika", en: "Wow, that's so soon! Happy early birthday!", uz: "Вой, бу жуда яқин экан! Олдиндан туғилган кунингиз муборак!" },
+        { speaker: "Anvar", en: "Thank you! This is also our lesson today.", uz: "Раҳмат! Бу бугунги дарсимиз ҳам." },
+        { speaker: "Malika", en: "Amazing, we have learned so much already!", uz: "Ажойиб, биз аллақачон жуда кўп нарса ўрганиб бўлдик!" },
+      ],
+    },
+    homeworkPrompt:
+      "Тартиб сонлар ва саналар ҳақида 9-10 та гап ёзинг: туғилган кунингиз қайси сана, бугун нечанчи сана. Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 44,
+    icon: "🔷",
+    titleUz: "Шакллар ва ранглар",
+    titleEn: "Shapes & Colors",
+    vocabulary: [
+      { en: "circle", uz: "доира", emoji: "⭕", mnemonic: "«сёркл» — «сёркл»(айлана)дан айнан ўзи." },
+      { en: "square", uz: "квадрат", emoji: "🟦", mnemonic: "«сквеа» — ўзбекчадаги «квадрат»га яқин." },
+      { en: "triangle", uz: "учбурчак", emoji: "🔺", mnemonic: "«трайэнгл» — «трай»(уч)+«энгл»(бурчак)." },
+      { en: "rectangle", uz: "тўғри тўртбурчак", emoji: "▬", mnemonic: "«ректэнгл» — «рект»(тўғри)+«энгл»(бурчак)." },
+      { en: "shape", uz: "шакл", emoji: "🔶", mnemonic: "«шейп» — «шейп»(шакл)дан айнан ўзи." },
+      { en: "round", uz: "юмалоқ", emoji: "🔴", mnemonic: "«раунд» — «раунд»(айлана)дан келади." },
+      { en: "colorful", uz: "ранг-баранг", emoji: "🌈", mnemonic: "«калафул» — «калар»(ранг)+«фул»(тўла)." },
+      { en: "pattern", uz: "нақш", emoji: "🎨", mnemonic: "«патерн» — «патерн»(нақш)дан айнан ўзи." },
+    ],
+    phrases: [
+      { en: "The ball is round, like a circle.", uz: "Тўп доира каби юмалоқ." },
+      { en: "This box is a square shape.", uz: "Бу қути квадрат шаклида." },
+      { en: "I like colorful patterns.", uz: "Мен ранг-баранг нақшларни ёқтираман." },
+      { en: "A triangle has three sides.", uz: "Учбурчакнинг уч томони бор." },
+      { en: "What shape is this table?", uz: "Бу стол қандай шаклда?" },
+    ],
+    dialogue: {
+      speakers: ["Malika", "Anvar"],
+      lines: [
+        { speaker: "Malika", en: "What shape is this kite, Anvar?", uz: "Бу варрак қандай шаклда, Анвар?" },
+        { speaker: "Anvar", en: "It's a triangle shape. I love its colorful pattern.", uz: "У учбурчак шаклида. Унинг ранг-баранг нақшини яхши кўраман." },
+        { speaker: "Malika", en: "My kite is a square shape.", uz: "Менинг варрагим квадрат шаклида." },
+        { speaker: "Anvar", en: "Look, that ball is perfectly round, like a circle.", uz: "Қаранг, у тўп доира каби мукаммал юмалоқ." },
+        { speaker: "Malika", en: "Yes! I love colorful, round things.", uz: "Ҳа! Мен ранг-баранг, юмалоқ нарсаларни яхши кўраман." },
+        { speaker: "Anvar", en: "Let's fly our kites together!", uz: "Варракларимизни биргаликда учирайлик!" },
+      ],
+    },
+    homeworkPrompt:
+      "Шакллар ва ранглар ҳақида 9-10 та гап ёзинг: атрофингиздаги нарсалар қандай шаклда ва рангда. Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 45,
+    icon: "✈️",
+    titleUz: "Аэропортда",
+    titleEn: "At the Airport",
+    vocabulary: [
+      { en: "airport", uz: "аэропорт", emoji: "🛫", mnemonic: "«эапорт» — «эа»(ҳаво)+«порт»(порт)." },
+      { en: "passport", uz: "паспорт", emoji: "🛂", mnemonic: "«паспорт» — ўзбекчадагидек айтилади." },
+      { en: "luggage", uz: "юк (чамадон)", emoji: "🧳", mnemonic: "«лагиж» — «лагиж»(юк)дан айнан ўзи." },
+      { en: "flight", uz: "парвоз", emoji: "🛩️", mnemonic: "«флайт» — «флай»(учмоқ)+«т» парвоз." },
+      { en: "ticket", uz: "чипта", emoji: "🎫", mnemonic: "«тикит» — чипта «тик»(тез) сотиб олинади." },
+      { en: "gate", uz: "дарвоза", emoji: "🚪", mnemonic: "«гейт» — «гейт»(дарвоза)дан айнан ўзи." },
+      { en: "boarding", uz: "самолётга чиқиш", emoji: "🎫", mnemonic: "«бординг» — «борд»(миниш)+«инг»." },
+      { en: "arrive", uz: "етиб келмоқ", emoji: "🛬", mnemonic: "«эрайв» — «эрайв»(етиб келмоқ)дан айнан ўзи." },
+    ],
+    phrases: [
+      { en: "Where is the airport?", uz: "Аэропорт қаерда?" },
+      { en: "I need to check my luggage.", uz: "Менга юкимни текширтиришим керак." },
+      { en: "What time does the flight leave?", uz: "Парвоз соат нечада учади?" },
+      { en: "Please show your passport.", uz: "Пасportingizni кўрсатинг, илтимос." },
+      { en: "We arrived at the airport early.", uz: "Биз аэропортга эрта етиб келдик." },
+    ],
+    dialogue: {
+      speakers: ["Anvar", "Malika"],
+      lines: [
+        { speaker: "Anvar", en: "Have you ever been to an airport?", uz: "Ҳеч аэропортда бўлganмисиз?" },
+        { speaker: "Malika", en: "Yes! Last year, we checked our luggage and showed our passports.", uz: "Ҳа! Ўтган йили биз юкimizni текширтирдик ва паспортимизни кўрsatдик." },
+        { speaker: "Anvar", en: "Was your flight long?", uz: "Парвозингиз узоқ давом этдими?" },
+        { speaker: "Malika", en: "It was about two hours. We arrived safely.", uz: "У тахминан икки соат давом этди. Биз хавфсиз етиб келдик." },
+        { speaker: "Anvar", en: "I want to travel by airplane someday.", uz: "Мен қачондир самолётда сафар қилишни хоҳлайман." },
+        { speaker: "Malika", en: "You will love it! It's very exciting.", uz: "Сизга жуда ёқади! Бу жуда ҳаяжонли." },
+      ],
+    },
+    homeworkPrompt:
+      "Аэропорт ва сафар ҳақида 9-10 та гап ёзинг: самолётда учганмисиз, аэропортда нима бор. Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 46,
+    icon: "📞",
+    titleUz: "Телефон орқали гаплашиш",
+    titleEn: "Making a Phone Call",
+    vocabulary: [
+      { en: "phone call", uz: "телефон қўнғироғи", emoji: "📞", mnemonic: "«фоун кол» — «фоун»(телефон)+«кол»(қўнғироқ)." },
+      { en: "speaking", uz: "гаплашяпти", emoji: "🗣️", mnemonic: "«спикинг» — «спик»(гапирмоқ)+«инг»." },
+      { en: "hold on", uz: "кутинг", emoji: "⏳", mnemonic: "«холд он» — «холд»(ушлаб турмоқ)дан келади." },
+      { en: "busy", uz: "банд", emoji: "🚫", mnemonic: "«бизи» — «бизи»(банд)дан айнан ўзи." },
+      { en: "message", uz: "хабар", emoji: "💬", mnemonic: "«месиж» — хабар «мессенжер»да юборилади." },
+      { en: "later", uz: "кейинроқ", emoji: "⏰", mnemonic: "«лейтер» — «лейт»(кечроқ)+«ер»." },
+      { en: "answer", uz: "жавоб бермоқ", emoji: "☎️", mnemonic: "«ансер» — «ансер»(жавоб)дан айнан ўзи." },
+      { en: "call back", uz: "қайта қўнғироқ қилмоқ", emoji: "🔄", mnemonic: "«кол бэк» — «кол»(қўнғироқ)+«бэк»(орқага)." },
+    ],
+    phrases: [
+      { en: "Hello, this is Anvar speaking.", uz: "Салом, бу Анвар гаплашяпти." },
+      { en: "Can I speak to Malika, please?", uz: "Малика билан гаплаша оламанми?" },
+      { en: "Please hold on a moment.", uz: "Илтимос бироз кутинг." },
+      { en: "She is busy right now.", uz: "У ҳозир банд." },
+      { en: "I will call you back later.", uz: "Мен сизга кейинроқ қайта қўнғироқ қиламан." },
+    ],
+    dialogue: {
+      speakers: ["Anvar", "Malika"],
+      lines: [
+        { speaker: "Anvar", en: "Hello, this is Anvar speaking. Can I speak to Malika, please?", uz: "Салом, бу Анвар гаплашяпти. Малика билан гаплаша оламанми?" },
+        { speaker: "Anvar", en: "Please hold on a moment.", uz: "Илтимос бироз кутинг." },
+        { speaker: "Malika", en: "Hello, Anvar! How are you?", uz: "Салом, Анвар! Қалайсиз?" },
+        { speaker: "Anvar", en: "I'm good! Are you busy right now?", uz: "Яхшиман! Ҳозир бандmisiz?" },
+        { speaker: "Malika", en: "A little. Can you call me back later?", uz: "Бироз. Менга кейинроқ қайта қўнғироқ қила оласизми?" },
+        { speaker: "Anvar", en: "Sure, no problem. Talk to you soon!", uz: "Албатта, муаммо йўқ. Тезда гаплашамиз!" },
+      ],
+    },
+    homeworkPrompt:
+      "Телефон орқали гаплашиш ҳақида 9-10 та гап ёзинг: телефон орқали кимга қандай гаплашасиз. Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 47,
+    icon: "🌳",
+    titleUz: "Атроф-муҳит",
+    titleEn: "Environment Basics",
+    vocabulary: [
+      { en: "environment", uz: "атроф-муҳит", emoji: "🌍", mnemonic: "«энвайронмент» — «энвайрон»(ўраб турган)дан келади." },
+      { en: "tree", uz: "дарахт", emoji: "🌳", mnemonic: "«три» — «три»(дарахт)дан айнан ўзи." },
+      { en: "clean", uz: "тоза", emoji: "🧼", mnemonic: "«клин» — «клин»(тоза)дан айнан ўзи." },
+      { en: "dirty", uz: "ифлос", emoji: "🗑️", mnemonic: "«дёрти» — «дёрт»(тупроқ)+«и»." },
+      { en: "recycle", uz: "қайта ишлатмоқ", emoji: "♻️", mnemonic: "«рисайкл» — «ри»(қайта)+«сайкл»(айланма)." },
+      { en: "pollution", uz: "ифлосланиш", emoji: "🏭", mnemonic: "«полюшн» — «полют»(ифлослантирмоқ)+«шн»." },
+      { en: "protect", uz: "ҳимоя қилмоқ", emoji: "🛡️", mnemonic: "«протект» — «протект»(ҳимоя)дан айнан ўзи." },
+      { en: "earth", uz: "ер (сайёра)", emoji: "🌎", mnemonic: "«ёрс» — «ёрс»(ер сайёраси)дан айнан ўзи." },
+    ],
+    phrases: [
+      { en: "We must protect our environment.", uz: "Биз атроф-муҳитимизни ҳимоя қилишимиз керак." },
+      { en: "Please keep the park clean.", uz: "Илтимос паркни тоза сақланг." },
+      { en: "We should recycle plastic bottles.", uz: "Биз пластик шишаларни қайта ишлатишимиз керак." },
+      { en: "Pollution is bad for the earth.", uz: "Ифлосланиш ер учун ёмон." },
+      { en: "Let's plant more trees.", uz: "Кўпроқ дарахт эkайlik." },
+    ],
+    dialogue: {
+      speakers: ["Malika", "Anvar"],
+      lines: [
+        { speaker: "Malika", en: "Look at all this trash. It's so dirty here.", uz: "Мана бу чиқиндиларга қаранг. Бу ерда жуда ифлос." },
+        { speaker: "Anvar", en: "We should recycle these plastic bottles.", uz: "Биз бу пластик шишаларни қайта ишлатишимиз керак." },
+        { speaker: "Malika", en: "You're right. Pollution is really bad for the environment.", uz: "Тўғри айтасиз. Ифлосланиш атроф-муҳит учун жуда ёмон." },
+        { speaker: "Anvar", en: "Let's clean this park together.", uz: "Бу паркни биргаликда тозалайлик." },
+        { speaker: "Malika", en: "Good idea! We should also plant more trees.", uz: "Яхши ғоя! Биз кўпроқ дарахт ҳам экишimiz керак." },
+        { speaker: "Anvar", en: "We must all protect the earth.", uz: "Барчамиз ерни ҳимоя қилишimiz керак." },
+      ],
+    },
+    homeworkPrompt:
+      "Атроф-муҳит ҳақида 9-10 та гап ёзинг: уни қандай тоза сақлаш мумкин, нима қилиш керак. Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 48,
+    icon: "📚",
+    titleUz: "Севимли китобим",
+    titleEn: "My Favorite Book",
+    vocabulary: [
+      { en: "story", uz: "ҳикоя", emoji: "📖", mnemonic: "«стори» — «стори»(ҳикоя)дан айнан ўзи." },
+      { en: "character", uz: "қаҳрамон", emoji: "🦸", mnemonic: "«каректер» — «каректер»(қаҳрамон)дан айнан ўзи." },
+      { en: "author", uz: "муаллиф", emoji: "✍️", mnemonic: "«отхор» — «отхор»(муаллиф)дан айнан ўзи." },
+      { en: "chapter", uz: "боб", emoji: "📑", mnemonic: "«чептер» — «чептер»(боб)дан айнан ўзи." },
+      { en: "adventure", uz: "саргузашт", emoji: "🗺️", mnemonic: "«эдвенчер» — «эдвенчер»(саргузашт)дан айнан ўзи." },
+      { en: "imagine", uz: "тасаввур қилмоқ", emoji: "💭", mnemonic: "«имэжин» — «имэж»(тасвир)+«ин»." },
+      { en: "ending", uz: "тугаш (охири)", emoji: "🔚", mnemonic: "«ендинг» — «енд»(тугамоқ)+«инг»." },
+      { en: "brave", uz: "жасур", emoji: "🦁", mnemonic: "«брейв» — «брейв»(жасур)дан айнан ўзи." },
+    ],
+    phrases: [
+      { en: "My favorite book is about adventure.", uz: "Менинг севимли китобим саргузашт ҳақида." },
+      { en: "Who is the main character?", uz: "Асосий қаҳрамон ким?" },
+      { en: "I love this author's stories.", uz: "Мен бу муаллифнинг ҳикояларини яхши кўраман." },
+      { en: "The story has an amazing ending.", uz: "Ҳикоянинг охири ажойиб." },
+      { en: "Can you imagine that adventure?", uz: "Ўша саргузаштни тасаввур қила оласизми?" },
+    ],
+    dialogue: {
+      speakers: ["Anvar", "Malika"],
+      lines: [
+        { speaker: "Anvar", en: "What is your favorite book, Malika?", uz: "Севимли китобингиз нима, Малика?" },
+        { speaker: "Malika", en: "It's a story about a girl's adventure in the mountains.", uz: "Бу тоғлардаги бир қизнинг саргузашти ҳақидаги ҳикоя." },
+        { speaker: "Anvar", en: "Who is the main character?", uz: "Асосий қаҳрамон ким?" },
+        { speaker: "Malika", en: "Her name is Aigerim. She is very brave.", uz: "Унинг исми Айгерим. У жуда жасур." },
+        { speaker: "Anvar", en: "That sounds amazing! Does it have a happy ending?", uz: "Ажойиб экан! Унинг охири бахтли тугайдими?" },
+        { speaker: "Malika", en: "Yes! I love happy endings.", uz: "Ҳа! Мен бахтли якунларни яхши кўраман." },
+      ],
+    },
+    homeworkPrompt:
+      "Севимли китобингиз ёки ҳикоянгиз ҳақида 9-10 та гап ёзинг: у нима ҳақида, қаҳрамони ким. Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 49,
+    icon: "📋",
+    titleUz: "Дам олиш куни режалари",
+    titleEn: "Weekend Plans Review",
+    vocabulary: [
+      { en: "last weekend", uz: "ўтган дам олиш куни", emoji: "⏮️", mnemonic: "«ласт викенд» — «ласт»(ўтган)+«викенд»." },
+      { en: "next weekend", uz: "келаси дам олиш куни", emoji: "⏭️", mnemonic: "«некст викенд» — «некст»(келаси)+«викенд»." },
+      { en: "activity", uz: "машғулот", emoji: "🎯", mnemonic: "«эктивити» — «эктив»(фаол)дан келади." },
+      { en: "relax", uz: "дам олмоқ", emoji: "🧘", mnemonic: "«рилакс» — «рилакс»(дам олмоқ)дан айнан ўзи." },
+      { en: "outdoor", uz: "очиқ ҳавода", emoji: "🏞️", mnemonic: "«аутдоор» — «аут»(ташqarida)+«доор»(эшик)." },
+      { en: "indoor", uz: "ёпиқ жойда", emoji: "🏠", mnemonic: "«индоор» — «ин»(ичкарида)+«доор»(эшик)." },
+      { en: "favorite activity", uz: "севимли машғулот", emoji: "❤️", mnemonic: "«фейворит эктивити» — «фейворит»(севимли)+«эктивити»." },
+      { en: "plan", uz: "режалаштирмоқ", emoji: "📝", mnemonic: "«плэн» — режа «план»(тартиб)ли бўлади." },
+    ],
+    phrases: [
+      { en: "Last weekend, I visited my friend.", uz: "Ўтган дам олиш кунида дўстимникига бордим." },
+      { en: "Next weekend, I am going to relax at home.", uz: "Келаси дам олиш кунида уйда дам оламан." },
+      { en: "I like outdoor activities more than indoor ones.", uz: "Менга очиq ҳаводаги машғулотлар ёпиқ жойдагилардан кўра кўпроқ ёқади." },
+      { en: "What was your favorite activity last weekend?", uz: "Ўтган дам олиш кунидаги севимли машғулотингиз нима эди?" },
+      { en: "Let's plan something fun for next weekend.", uz: "Келаси дам олиш куни учун қизиқарли нарса режалаштирайлик." },
+    ],
+    dialogue: {
+      speakers: ["Anvar", "Malika"],
+      lines: [
+        { speaker: "Anvar", en: "What did you do last weekend?", uz: "Ўтган дам олиш куни нима қилдингиз?" },
+        { speaker: "Malika", en: "I visited my grandmother and we cooked together.", uz: "Бувимникига бордим ва биз бирга овқат пиширдик." },
+        { speaker: "Anvar", en: "That's nice! What are you going to do next weekend?", uz: "Яхши экан! Келаси дам олиш куни нима қилмоқчисиз?" },
+        { speaker: "Malika", en: "I am going to relax at home and read books.", uz: "Уйда дам олиб, китоб ўqiyman." },
+        { speaker: "Anvar", en: "I prefer outdoor activities, like playing football.", uz: "Мен очиq ҳаводаги машғулотларни, масалан футбол ўйнашни афзал кўраман." },
+        { speaker: "Malika", en: "Let's plan something fun together for next weekend!", uz: "Келаси дам олиш куни учун биргаликда қизиқарли нарса режалаштирайлик!" },
+      ],
+    },
+    homeworkPrompt:
+      "Ўтган ва келаси дам олиш кунлари ҳақида 9-10 та гап ёзинг (ўтган ва келажак замonlardan foydalaning). Ҳар бир қаторга битта гап ёзинг.",
+  },
+
+  {
+    id: 50,
+    icon: "🎓",
+    titleUz: "Кенгайтирилган ўз-ўзини таништириш",
+    titleEn: "Extended Self-Introduction",
+    vocabulary: [
+      { en: "also", uz: "шунингдек", emoji: "➕", mnemonic: "«олсоу» — «ол»(ҳам)+«соу»." },
+      { en: "but", uz: "лекин", emoji: "↔️", mnemonic: "«бат» — «бат»(лекин)дан айнан ўзи." },
+      { en: "for example", uz: "масалан", emoji: "💡", mnemonic: "«фор игзампл» — «игзампл»(мисол)дан келади." },
+      { en: "first of all", uz: "аввалambor", emoji: "1️⃣", mnemonic: "«фёрст оф ол» — «фёрст»(биринчи)+«оф ол»." },
+      { en: "in addition", uz: "қўшимча равишда", emoji: "➕", mnemonic: "«ин эдишн» — «эдд»(қўшмоқ)дан келади." },
+      { en: "finally", uz: "ниҳоят", emoji: "🏁", mnemonic: "«файнали» — «файнал»(охирги)дан келади." },
+      { en: "in conclusion", uz: "хулоса қилиб айтганда", emoji: "✅", mnemonic: "«ин конклюжн» — «конклюд»(якунламоq)дан келади." },
+      { en: "proud", uz: "фахрланувчи", emoji: "🦚", mnemonic: "«прауд» — фахрланганда «прауд»(мағрур) юрасиз." },
+    ],
+    phrases: [
+      { en: "First of all, let me introduce myself.", uz: "Аввалambor, ўзimni таништирай." },
+      { en: "I also like playing football.", uz: "Мен шунингдек футбол ўйнашни ҳам ёқтираман." },
+      { en: "I like math, but I prefer English.", uz: "Мен математикани ёқтираман, лекин инглиз тилини афзал кўраман." },
+      { en: "For example, I study every day.", uz: "Масалан, мен ҳар куни ўqiyman." },
+      { en: "In conclusion, I love learning English.", uz: "Хулоса қилиб айтganda, мен инглиз тилини ўрганишни жуда яхши кўраман." },
+    ],
+    dialogue: {
+      speakers: ["Malika", "Anvar"],
+      lines: [
+        { speaker: "Malika", en: "Anvar, can you introduce yourself in English now?", uz: "Анвар, ҳозир ўзингизни инглиз тилида таништира оласизми?" },
+        { speaker: "Anvar", en: "Sure! First of all, my name is Anvar. I am eleven years old, and I am from Uzbekistan, but I live in Kyrgyzstan.", uz: "Албатта! Аввалambor, исмим Анвар. Мен ўн бир ёшдаман ва Ўзбекистонданман, лекин Қирғизистонда яшайман." },
+        { speaker: "Malika", en: "That's great! Tell me more.", uz: "Ажойиб! Яна гапиринг." },
+        { speaker: "Anvar", en: "I also love football and reading books. In addition, I want to be a teacher one day.", uz: "Мен шунингдек футбол ва китоб ўqishни ҳам яхши кўраман. Қўшимча равишда, қачондир ўqituvchi бўлишни хоҳлайман." },
+        { speaker: "Malika", en: "Amazing! You have learned so much.", uz: "Ажойиб! Сиз жуда кўп нарса ўрgangansiz." },
+        { speaker: "Anvar", en: "Yes! In conclusion, I am proud of my progress with Zam-Zam EDU.", uz: "Ҳа! Хулоса қилиб айтganda, Zam-Zam EDU билан бўлган ривожланишimdan фахрланаman." },
+      ],
+    },
+    homeworkPrompt:
+      "Ўзингиз ҳақингизда 9-10 та гап билан тўлиқ танishtiruv ёзинг — 1-49-дарсларда ўрgangan барча мавзуларни (исм, оила, кун, мактаб, мамлакат, севимли нарсалар ва ҳ.к.) бирлаштириб, боғловчи сўзлардан (also, but, because, for example) фойдаланинг. Ҳар бир қаторга битта гап ёзинг.",
+  },
 ];
 
 export function getLesson(lessonId) {

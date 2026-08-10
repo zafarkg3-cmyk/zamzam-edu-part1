@@ -74,6 +74,11 @@ export default {
           "0%": { transform: "translateY(0)", opacity: "0.5" },
           "100%": { transform: "translateY(-100vh)", opacity: "0" },
         },
+        "bubble-pop": {
+          "0%": { transform: "scale(1)", opacity: "1" },
+          "60%": { transform: "scale(1.35)", opacity: "0.7" },
+          "100%": { transform: "scale(0)", opacity: "0" },
+        },
       },
       animation: {
         "pop-in": "pop-in 0.35s ease-out",
@@ -81,6 +86,7 @@ export default {
         "wrong-shake": "wrong-shake 0.45s ease-in-out",
         "bob": "bob 3s ease-in-out infinite",
         "drop-rise": "drop-rise 8s linear infinite",
+        "bubble-pop": "bubble-pop 0.3s ease-out forwards",
       },
     },
   },

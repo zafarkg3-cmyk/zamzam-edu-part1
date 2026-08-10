@@ -102,7 +102,7 @@ export default function Dashboard({ student, onSwitchStudent }) {
         <ProgressRing completed={completedCount} total={LESSONS.length} />
       </div>
 
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-center gap-3 mb-6 flex-wrap">
         {streak !== null && streak > 0 && (
           <div className="flex items-center gap-1.5 bg-sun/15 text-sun-deep rounded-full px-3.5 py-1.5 font-bold text-sm">
             🔥 {streak} кун кетма-кет
@@ -113,6 +113,12 @@ export default function Dashboard({ student, onSwitchStudent }) {
           className="flex items-center gap-1.5 bg-aqua-pale text-aqua-deep rounded-full px-3.5 py-1.5 font-bold text-sm hover:bg-aqua/20 transition-colors"
         >
           🏆 Умумий рейтинг
+        </Link>
+        <Link
+          to="/game"
+          className="flex items-center gap-1.5 bg-leaf/15 text-leaf-deep rounded-full px-3.5 py-1.5 font-bold text-sm hover:bg-leaf/25 transition-colors"
+        >
+          🫧 Ўйин
         </Link>
       </div>
 

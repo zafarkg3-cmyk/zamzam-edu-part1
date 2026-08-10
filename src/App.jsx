@@ -6,6 +6,7 @@ import LessonResult from "./pages/LessonResult";
 import TeacherLogin from "./pages/TeacherLogin";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import Leaderboard from "./pages/Leaderboard";
+import BubbleGame from "./pages/BubbleGame";
 import { useStudent } from "./hooks/useStudent";
 
 export default function App() {
@@ -35,6 +36,11 @@ export default function App() {
         <Route
           path="/result"
           element={student ? <LessonResult student={student} /> : <Navigate to="/" replace />}
+        />
+
+        <Route
+          path="/game"
+          element={student ? <BubbleGame student={student} /> : <Navigate to="/" replace />}
         />
 
         <Route path="/teacher" element={<TeacherLogin />} />

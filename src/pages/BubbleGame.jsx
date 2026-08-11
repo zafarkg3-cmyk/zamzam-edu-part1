@@ -13,7 +13,8 @@ const MAX_BUBBLES = 4;
 const MIN_RISE_SECONDS = 6;
 const MAX_RISE_SECONDS = 9;
 const PLAY_AREA_HEIGHT = 420; // px — must match the play-area div's height below
-const RISE_DISTANCE = PLAY_AREA_HEIGHT + 100; // travels well past the top before unmounting
+const BUBBLE_SIZE = 96; // px — matches w-24 h-24
+const RISE_DISTANCE = PLAY_AREA_HEIGHT + BUBBLE_SIZE; // travel fully past the top edge
 
 function shuffle(array) {
   const copy = [...array];
@@ -25,35 +26,49 @@ function shuffle(array) {
 }
 
 /**
- * One rising bubble. Fully self-contained: it manages its own two-step
- * "start low, then transition to high" animation via inline styles and a
- * plain CSS transition, so it never depends on an external stylesheet
- * (e.g. a @keyframes rule in index.css) being present — that dependency
- * was the root cause of a previous bug where bubbles rendered but never
- * moved after a deploy that silently dropped the CSS file.
+ * One rising bubble. Position is computed every animation frame from
+ * plain elapsed wall-clock time and written straight to the DOM element's
+ * style — there is no CSS @keyframes rule and no CSS transition involved
+ * anywhere. This is deliberate: an earlier CSS-transition-based version
+ * of this game rendered bubbles that never visibly moved (they stayed
+ * pinned to the bottom of the play area) because the two-frame trick
+ * needed to trigger a CSS transition didn't fire reliably. Driving the
+ * animation purely in JS removes that entire class of failure — the
+ * bubble's position no longer depends on any stylesheet, transition
+ * timing, or browser quirk being exactly right.
  */
 function RisingBubble({ bubble, onTap, onEscape }) {
-  const [risen, setRisen] = useState(false);
+  const elRef = useRef(null);
   const resolvedRef = useRef(false);
+  const spawnTimeRef = useRef(performance.now());
 
   useEffect(() => {
-    // Paint the bubble at its starting position first, then — on the next
-    // animation frame — flip to the risen position so the browser has a
-    // "before" state to transition from. Without this two-step dance the
-    // transition can be skipped entirely.
-    const raf1 = requestAnimationFrame(() => {
-      const raf2 = requestAnimationFrame(() => setRisen(true));
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      return () => cancelAnimationFrame(raf2);
-    });
-    return () => cancelAnimationFrame(raf1);
-  }, []);
+    let frameId;
 
-  function handleTransitionEnd(e) {
-    if (e.propertyName !== "bottom" || resolvedRef.current) return;
-    resolvedRef.current = true;
-    onEscape(bubble);
-  }
+    function tick() {
+      if (resolvedRef.current) return;
+
+      const elapsedMs = performance.now() - spawnTimeRef.current;
+      const progress = Math.min(1, elapsedMs / (bubble.duration * 1000));
+      const bottomPx = -70 + progress * (RISE_DISTANCE + 70);
+
+      if (elRef.current) {
+        elRef.current.style.bottom = `${bottomPx}px`;
+      }
+
+      if (progress >= 1) {
+        resolvedRef.current = true;
+        onEscape(bubble);
+        return;
+      }
+
+      frameId = requestAnimationFrame(tick);
+    }
+
+    frameId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frameId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bubble.id]);
 
   function handleClick() {
     if (resolvedRef.current) return;
@@ -63,15 +78,11 @@ function RisingBubble({ bubble, onTap, onEscape }) {
 
   return (
     <button
+      ref={elRef}
       type="button"
       onClick={handleClick}
-      onTransitionEnd={handleTransitionEnd}
       className="absolute w-24 h-24 rounded-full bg-aqua-gradient shadow-soft flex items-center justify-center text-center px-2"
-      style={{
-        left: `${bubble.left}%`,
-        bottom: risen ? `${RISE_DISTANCE}px` : "-70px",
-        transition: `bottom ${bubble.duration}s linear`,
-      }}
+      style={{ left: `${bubble.left}%`, bottom: "-70px" }}
     >
       <span className="text-white font-display font-bold text-xs leading-tight break-words">
         {bubble.en}
@@ -99,7 +110,7 @@ export default function BubbleGame({ student }) {
   const statusRef = useRef(status);
   statusRef.current = status;
   // Guards against a wave being spawned twice for the same "all bubbles
-  // gone" moment (e.g. a tap and a transition-end racing each other).
+  // gone" moment (e.g. a tap and an escape racing each other).
   const waveTokenRef = useRef(0);
 
   useEffect(() => {
@@ -182,15 +193,20 @@ export default function BubbleGame({ student }) {
     }, 1000);
   }
 
-  // Called with the CURRENT wave token so a stray callback from an old,
-  // already-replaced wave can never spawn a duplicate/early next wave.
+  // Called with the wave token captured AT THE MOMENT the bubble was
+  // resolved, so a stray callback from an already-replaced wave can never
+  // spawn a duplicate/premature next wave.
   function maybeAdvanceWave(remainingCount, tokenAtCallTime) {
-    if (remainingCount === 0 && statusRef.current === "playing" && tokenAtCallTime === waveTokenRef.current) {
+    if (
+      remainingCount === 0 &&
+      statusRef.current === "playing" &&
+      tokenAtCallTime === waveTokenRef.current
+    ) {
       waveTimeoutRef.current = setTimeout(spawnWave, 500);
     }
   }
 
-  function handleBubbleTap(bubble) {
+  const handleBubbleTap = useCallback((bubble) => {
     if (statusRef.current !== "playing") return;
     const token = waveTokenRef.current;
 
@@ -209,9 +225,10 @@ export default function BubbleGame({ student }) {
         return remaining;
       });
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playCorrect, playWrong, spawnWave]);
 
-  function handleBubbleEscaped(bubble) {
+  const handleBubbleEscaped = useCallback((bubble) => {
     if (statusRef.current !== "playing") return;
     const token = waveTokenRef.current;
 
@@ -227,7 +244,8 @@ export default function BubbleGame({ student }) {
         return remaining;
       });
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [spawnWave]);
 
   const accuracy = useMemo(() => {
     const total = score + misses;

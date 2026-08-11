@@ -12,6 +12,8 @@ const ROUND_SECONDS = 60;
 const MAX_BUBBLES = 4;
 const MIN_RISE_SECONDS = 6;
 const MAX_RISE_SECONDS = 9;
+const PLAY_AREA_HEIGHT = 420; // px — must match the play-area div's height below
+const RISE_DISTANCE = PLAY_AREA_HEIGHT + 100; // travels well past the top before unmounting
 
 function shuffle(array) {
   const copy = [...array];
@@ -20,6 +22,62 @@ function shuffle(array) {
     [copy[i], copy[j]] = [copy[j], copy[i]];
   }
   return copy;
+}
+
+/**
+ * One rising bubble. Fully self-contained: it manages its own two-step
+ * "start low, then transition to high" animation via inline styles and a
+ * plain CSS transition, so it never depends on an external stylesheet
+ * (e.g. a @keyframes rule in index.css) being present — that dependency
+ * was the root cause of a previous bug where bubbles rendered but never
+ * moved after a deploy that silently dropped the CSS file.
+ */
+function RisingBubble({ bubble, onTap, onEscape }) {
+  const [risen, setRisen] = useState(false);
+  const resolvedRef = useRef(false);
+
+  useEffect(() => {
+    // Paint the bubble at its starting position first, then — on the next
+    // animation frame — flip to the risen position so the browser has a
+    // "before" state to transition from. Without this two-step dance the
+    // transition can be skipped entirely.
+    const raf1 = requestAnimationFrame(() => {
+      const raf2 = requestAnimationFrame(() => setRisen(true));
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      return () => cancelAnimationFrame(raf2);
+    });
+    return () => cancelAnimationFrame(raf1);
+  }, []);
+
+  function handleTransitionEnd(e) {
+    if (e.propertyName !== "bottom" || resolvedRef.current) return;
+    resolvedRef.current = true;
+    onEscape(bubble);
+  }
+
+  function handleClick() {
+    if (resolvedRef.current) return;
+    resolvedRef.current = true;
+    onTap(bubble);
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={handleClick}
+      onTransitionEnd={handleTransitionEnd}
+      className="absolute w-24 h-24 rounded-full bg-aqua-gradient shadow-soft flex items-center justify-center text-center px-2"
+      style={{
+        left: `${bubble.left}%`,
+        bottom: risen ? `${RISE_DISTANCE}px` : "-70px",
+        transition: `bottom ${bubble.duration}s linear`,
+      }}
+    >
+      <span className="text-white font-display font-bold text-xs leading-tight break-words">
+        {bubble.en}
+      </span>
+    </button>
+  );
 }
 
 export default function BubbleGame({ student }) {
@@ -40,10 +98,10 @@ export default function BubbleGame({ student }) {
   const countdownRef = useRef(null);
   const statusRef = useRef(status);
   statusRef.current = status;
+  // Guards against a wave being spawned twice for the same "all bubbles
+  // gone" moment (e.g. a tap and a transition-end racing each other).
+  const waveTokenRef = useRef(0);
 
-  // Build the review word pool from every lesson the student has already
-  // completed — this is the whole point of the game: keep older
-  // vocabulary alive instead of it fading after one quiz.
   useEffect(() => {
     let cancelled = false;
     fetchStudentProgress(student.id)
@@ -78,6 +136,7 @@ export default function BubbleGame({ student }) {
 
   const spawnWave = useCallback(() => {
     if (!pool || pool.length < 2) return;
+    waveTokenRef.current += 1;
 
     const target = pool[Math.floor(Math.random() * pool.length)];
     const optionCount = Math.min(MAX_BUBBLES, pool.length);
@@ -103,6 +162,7 @@ export default function BubbleGame({ student }) {
 
   function startGame() {
     if (!pool || pool.length < 2) return;
+    clearTimers();
     setScore(0);
     setMisses(0);
     setTimeLeft(ROUND_SECONDS);
@@ -122,26 +182,30 @@ export default function BubbleGame({ student }) {
     }, 1000);
   }
 
-  function endRoundIfEmpty(remaining) {
-    if (remaining.length === 0 && statusRef.current === "playing") {
+  // Called with the CURRENT wave token so a stray callback from an old,
+  // already-replaced wave can never spawn a duplicate/early next wave.
+  function maybeAdvanceWave(remainingCount, tokenAtCallTime) {
+    if (remainingCount === 0 && statusRef.current === "playing" && tokenAtCallTime === waveTokenRef.current) {
       waveTimeoutRef.current = setTimeout(spawnWave, 500);
     }
   }
 
   function handleBubbleTap(bubble) {
     if (statusRef.current !== "playing") return;
+    const token = waveTokenRef.current;
 
     if (bubble.isCorrect) {
       setScore((s) => s + 1);
       playCorrect();
       setBubbles([]);
+      waveTokenRef.current += 1; // invalidate any other in-flight callbacks from this wave
       waveTimeoutRef.current = setTimeout(spawnWave, 450);
     } else {
       setMisses((m) => m + 1);
       playWrong();
       setBubbles((prev) => {
         const remaining = prev.filter((b) => b.id !== bubble.id);
-        endRoundIfEmpty(remaining);
+        maybeAdvanceWave(remaining.length, token);
         return remaining;
       });
     }
@@ -149,17 +213,17 @@ export default function BubbleGame({ student }) {
 
   function handleBubbleEscaped(bubble) {
     if (statusRef.current !== "playing") return;
+    const token = waveTokenRef.current;
 
     if (bubble.isCorrect) {
-      // The correct bubble floated away untapped — the whole wave is now
-      // stale (its target is gone), so clear it and start a fresh one.
       setMisses((m) => m + 1);
       setBubbles([]);
+      waveTokenRef.current += 1;
       waveTimeoutRef.current = setTimeout(spawnWave, 400);
     } else {
       setBubbles((prev) => {
         const remaining = prev.filter((b) => b.id !== bubble.id);
-        endRoundIfEmpty(remaining);
+        maybeAdvanceWave(remaining.length, token);
         return remaining;
       });
     }
@@ -259,26 +323,16 @@ export default function BubbleGame({ student }) {
           </Card>
 
           <div
-            className="relative flex-1 rounded-3xl overflow-hidden border-2 border-aqua/15 bg-aqua-pale/40"
-            style={{ height: 420 }}
+            className="relative rounded-3xl overflow-hidden border-2 border-aqua/15 bg-aqua-pale/40"
+            style={{ height: PLAY_AREA_HEIGHT }}
           >
             {bubbles.map((b) => (
-              <button
+              <RisingBubble
                 key={b.id}
-                type="button"
-                onClick={() => handleBubbleTap(b)}
-                onAnimationEnd={() => handleBubbleEscaped(b)}
-                className="bubble-rise absolute w-24 h-24 rounded-full bg-aqua-gradient shadow-soft flex items-center justify-center text-center px-2 active:scale-90 transition-transform"
-                style={{
-                  left: `${b.left}%`,
-                  animationDuration: `${b.duration}s`,
-                  "--rise-distance": "480px",
-                }}
-              >
-                <span className="text-white font-display font-bold text-xs leading-tight break-words">
-                  {b.en}
-                </span>
-              </button>
+                bubble={b}
+                onTap={handleBubbleTap}
+                onEscape={handleBubbleEscaped}
+              />
             ))}
           </div>
         </>

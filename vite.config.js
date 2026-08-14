@@ -27,6 +27,14 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ["**/*.{js,css,html,svg,png,ico}"],
+        // Activate a newly-deployed service worker right away instead of
+        // waiting for every open tab to be closed first. Combined with
+        // registerType: "autoUpdate" above, this makes sure a new deploy
+        // (e.g. this bugfix) actually reaches phones/browsers that still
+        // have the app open, rather than silently keeping the old cached
+        // version running.
+        skipWaiting: true,
+        clientsClaim: true,
       },
     }),
   ],

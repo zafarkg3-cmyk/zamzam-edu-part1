@@ -16,20 +16,33 @@ export default function Leaderboard() {
   const navigate = useNavigate();
   const [rows, setRows] = useState(null);
   const [error, setError] = useState("");
+  const [lastUpdated, setLastUpdated] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    let cancelled = false;
+  const load = (isManual = false) => {
+    if (isManual) setRefreshing(true);
     fetchLeaderboard()
       .then((data) => {
-        if (!cancelled) setRows(data);
+        setRows(data);
+        setError("");
+        setLastUpdated(new Date());
       })
       .catch((err) => {
         console.error(err);
-        if (!cancelled) setError("Рейтингни юклашда хатолик юз берди.");
+        setError("Рейтингни юклашда хатолик юз берди.");
+      })
+      .finally(() => {
+        if (isManual) setRefreshing(false);
       });
-    return () => {
-      cancelled = true;
-    };
+  };
+
+  useEffect(() => {
+    load();
+    // Auto-refresh every 15s while this page is open, so a teacher's
+    // approval or a student's finished lesson shows up without anyone
+    // needing to know to hard-refresh the browser.
+    const interval = setInterval(load, 15000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -41,6 +54,21 @@ export default function Leaderboard() {
           <p className="text-ink-faint text-sm mt-1">
             Ўқитувчи тасдиқлаган ҳар бир дарс учун +10 балл — юқори 10 та олтин 🥇, кейинги 10 та кумуш 🥈, кейинги 10 та бронза 🥉
           </p>
+          <div className="flex items-center justify-center gap-2 mt-2">
+            {lastUpdated && (
+              <span className="text-xs text-ink-faint">
+                Янгиланди: {lastUpdated.toLocaleTimeString("uz-UZ")}
+              </span>
+            )}
+            <button
+              type="button"
+              onClick={() => load(true)}
+              disabled={refreshing}
+              className="text-xs font-semibold text-aqua-deep hover:underline disabled:opacity-50"
+            >
+              {refreshing ? "Янгиланмоқда..." : "🔄 Қайта юклаш"}
+            </button>
+          </div>
         </div>
 
         <Card className="p-0 overflow-hidden">

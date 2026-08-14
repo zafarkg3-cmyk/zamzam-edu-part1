@@ -13,4 +13,15 @@ if (!supabaseUrl || !supabaseAnonKey) {
   );
 }
 
-export const supabase = createClient(supabaseUrl ?? "", supabaseAnonKey ?? "");
+// IMPORTANT: force every request this client makes to skip the browser's
+// HTTP cache entirely. Without this, some browsers (especially on mobile,
+// or when the app is installed as a PWA) can silently serve a cached copy
+// of a GET response instead of hitting Supabase again — which looks
+// exactly like "the leaderboard isn't updating" even though the database
+// itself is correct and up to date.
+const noCacheFetch = (input, init = {}) =>
+  fetch(input, { ...init, cache: "no-store" });
+
+export const supabase = createClient(supabaseUrl ?? "", supabaseAnonKey ?? "", {
+  global: { fetch: noCacheFetch },
+});

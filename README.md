@@ -4,7 +4,7 @@ A spoken-English course for Uzbek-speaking children, built as a
 mobile-first, installable PWA with a shared cloud database (Supabase) so
 parents and teachers can watch every student's progress live.
 
-**15 lessons total, in order (each unlocks the next):**
+**50 lessons total, in order (each unlocks the next):**
 
 *Part 1 — introducing yourself:*
 1. About Myself — Мен ҳақимда
@@ -24,6 +24,52 @@ parents and teachers can watch every student's progress live.
 13. Travel & Transport — Сафар ва транспорт
 14. Time & Calendar — Вақт ва сана
 15. Emotions & Feelings — Ҳис-туйғулар
+
+*Part 3 — begins the A1→A2 grammar progression (there is/are, can,
+Past Simple, "going to" future, comparatives):*
+16. Animals — Ҳайвонлар
+17. At Home — Уйда
+18. Jobs & Professions — Касблар
+19. Countries & Nationalities — Мамлакат ва миллат
+20. Sports & Competitions — Спорт мусобақалари (can/can't)
+21. Yesterday — Кеча нима қилдим (Past Simple)
+22. Tomorrow's Plans — Эртанги режалар (going to)
+23. Comparisons — Таққослаш (comparative/superlative)
+24. Technology & Communication — Технология ва алоқа
+25. My Country, Kyrgyzstan — Ватаним
+
+*Part 4 — classroom language, cooking, seasons, holidays, quantities,
+transport, adverbs of frequency, Present Continuous:*
+26. In the Classroom — Синфда
+27. Cooking & Recipes — Овқат тайёрлаш
+28. Seasons — Йил фасллари
+29. Holidays & Celebrations — Байрамлар
+30. Quantities & Shopping List — Миқдорлар ва харид рўйхати
+31. Public Transport — Жамоат транспорти
+32. Adverbs of Frequency — Ҳар доим, баъзан, ҳеч қачон
+33. Present Continuous — Ҳозир нима қиляпман
+
+*Part 5 — social language (opinions, suggestions, permission),
+possessions, descriptive adjectives, dates, and a culminating review:*
+34. At the Doctor's — Шифокорда
+35. My Neighborhood — Маҳаллам
+36. Party & Invitations — Зиёфат ва таклифнома
+37. School Opinions — Мактаб фанлари ҳақида фикр
+38. Making Suggestions — Таклиф бермоқ
+39. Asking Permission — Рухсат сўраш
+40. Possessions — Шахсий буюмлар
+41. Descriptive Adjectives — Тасвирловчи сифатлар
+42. Months of the Year — Йил ойлари
+43. Ordinal Numbers & Dates — Тартиб сонлар ва саналар
+44. Shapes & Colors — Шакллар ва ранглар
+45. At the Airport — Аэропортда
+46. Making a Phone Call — Телефон орқали гаплашиш
+47. Environment Basics — Атроф-муҳит
+48. My Favorite Book — Севимли китобим
+49. Weekend Plans Review — Дам олиш куни режалари
+50. Extended Self-Introduction — Кенгайтирилган ўз-ўзини таништириш
+    (culminating review — combines vocabulary/grammar from all 49
+    previous lessons into one longer self-introduction speech)
 
 
 Each lesson: **Vocabulary** (flashcards + text-to-speech + memory-trick
@@ -226,6 +272,27 @@ Same two options as before — see the full walkthrough in the sibling
 - **Native project**: `npm run android:add` (needs Android Studio) — this
   repo already has `capacitor.config.json` and `resources/icon.png` +
   `resources/splash.png` ready for it.
+
+## 🫧 Bubble Pop — vocabulary review game
+
+`src/pages/BubbleGame.jsx` (route `/game`, linked from the dashboard) is a
+60-second arcade-style review round: the Uzbek word for a randomly chosen
+vocabulary item is shown, and up to 4 bubbles rise from the bottom of the
+play area, each carrying an English word — the student taps the one that
+matches before it floats off the top.
+
+**The word pool is built entirely from the student's own completed
+lessons** (`progress.completed = true`), deduplicated by English word —
+this is deliberate: it's the app's answer to vocabulary fading after a
+lesson's one-time quiz, giving spaced repetition across everything the
+student has already learned rather than introducing new content. If fewer
+than 2 lessons are completed, the game shows a friendly "finish a lesson
+first" message instead of starting.
+
+Tapping the correct bubble scores a point and immediately starts the next
+word; tapping a wrong one or letting the correct bubble escape off the top
+doesn't end the round, it just moves on. Not wired into the points/
+leaderboard system (it's meant as low-stakes repetition, not graded work).
 
 ## 🎨 Design notes
 

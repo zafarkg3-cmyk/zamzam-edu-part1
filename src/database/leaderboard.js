@@ -1,6 +1,29 @@
 import { supabase } from "./supabaseClient";
 
 const POINTS_PER_APPROVED_LESSON = 10;
+const PAGE_SIZE = 1000; // Supabase/PostgREST's default max rows per request
+
+/**
+ * Fetch every row of a table/query, paginating past Supabase's default
+ * 1000-row-per-request limit. Without this, any query that returns more
+ * than 1000 rows is silently truncated — no error, just missing data —
+ * which is exactly what caused the leaderboard to "freeze" once this
+ * classroom's approved-homework count passed 1000: the newest approvals
+ * (rows past #1000) were silently dropped from every fetch, so newly
+ * completed/approved lessons stopped affecting anyone's points.
+ */
+async function fetchAllRows(queryBuilder) {
+  let all = [];
+  let from = 0;
+  while (true) {
+    const { data, error } = await queryBuilder.range(from, from + PAGE_SIZE - 1);
+    if (error) throw error;
+    all = all.concat(data);
+    if (data.length < PAGE_SIZE) break;
+    from += PAGE_SIZE;
+  }
+  return all;
+}
 
 /**
  * Build the global leaderboard: every registered student, across every
@@ -16,19 +39,13 @@ const POINTS_PER_APPROVED_LESSON = 10;
  * until it's resubmitted and approved.
  */
 export async function fetchLeaderboard() {
-  const { data: completedRows, error: progressError } = await supabase
-    .from("progress")
-    .select("student_id, lesson_id, score, total_questions")
-    .eq("completed", true);
+  const completedRows = await fetchAllRows(
+    supabase.from("progress").select("student_id, lesson_id, score, total_questions").eq("completed", true)
+  );
 
-  if (progressError) throw progressError;
-
-  const { data: approvedHomework, error: homeworkError } = await supabase
-    .from("homework")
-    .select("student_id, lesson_id")
-    .eq("teacher_status", "approved");
-
-  if (homeworkError) throw homeworkError;
+  const approvedHomework = await fetchAllRows(
+    supabase.from("homework").select("student_id, lesson_id").eq("teacher_status", "approved")
+  );
 
   const approvedSet = new Set(approvedHomework.map((h) => `${h.student_id}:${h.lesson_id}`));
 
@@ -46,11 +63,9 @@ export async function fetchLeaderboard() {
     }
   }
 
-  const { data: students, error: studentsError } = await supabase
-    .from("students")
-    .select("id, name, surname, streak_count, groups(name)");
-
-  if (studentsError) throw studentsError;
+  const students = await fetchAllRows(
+    supabase.from("students").select("id, name, surname, streak_count, groups(name)")
+  );
 
   const ranked = students
     .map((s) => ({

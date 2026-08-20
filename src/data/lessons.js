@@ -760,7 +760,7 @@ export const LESSONS = [
         { speaker: "Anvar", en: "Can you play basketball?", uz: "Баскетбол ўйнай оласизми?" },
         { speaker: "Malika", en: "Yes, I can! I play every weekend.", uz: "Ҳа, ўйнай оламан! Ҳар дам олиш куни ўйнайман." },
         { speaker: "Anvar", en: "That's great! Our team won the last match.", uz: "Ажойиб! Бизнинг жамоамиз охирги ўйинда ютди." },
-        { speaker: "Malika", en: "Congratulations! Can you swim too?", uz: "Табриклайман! Суза ҳам оласизми?" },
+        { speaker: "Malika", en: "Congratulations! Can you swim too?", uz: "Табриклайман! Сиз ҳам суза оласизми?" },
         { speaker: "Anvar", en: "No, I can't swim well. Can you teach me?", uz: "Йўқ, мен яхши сузолмайман. Менга ўргата оласизми?" },
         { speaker: "Malika", en: "Of course! Let's practice together.", uz: "Албатта! Биргаликда машқ қилайлик." },
       ],
